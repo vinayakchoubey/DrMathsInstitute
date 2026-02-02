@@ -20,34 +20,27 @@ const allowedOrigins = [
     process.env.CLIENT_URL
 ].filter(Boolean) as string[];
 
-// Handle preflight OPTIONS requests explicitly
-app.options('*', (req: Request, res: Response) => {
-    const origin = req.headers.origin;
-    if (origin && allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    } else {
-        res.setHeader('Access-Control-Allow-Origin', 'https://drmaths-frontend.vercel.app');
-    }
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Max-Age', '86400');
-    res.status(200).end();
-});
+// Use cors middleware - this properly handles preflight OPTIONS requests
+app.use(cors({
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
 
-// CORS middleware for all other requests
-app.use((req: Request, res: Response, next) => {
-    const origin = req.headers.origin;
-    if (origin && allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    } else if (origin) {
-        res.setHeader('Access-Control-Allow-Origin', 'https://drmaths-frontend.vercel.app');
-    }
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-    next();
-});
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            // For any other origin, use the production frontend URL
+            callback(null, 'https://drmaths-frontend.vercel.app');
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    maxAge: 86400 // Cache preflight response for 24 hours
+}));
+
+// Handle preflight requests explicitly as a backup
+app.options('*', cors());
 
 app.use(express.json());
 
