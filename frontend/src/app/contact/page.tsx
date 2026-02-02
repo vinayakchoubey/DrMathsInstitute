@@ -15,7 +15,7 @@ export default function ContactPage() {
             const user = localStorage.getItem("user");
             const userId = user ? JSON.parse(user)._id : null;
 
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000'}/api/messages`, {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/messages`, {
                 ...formState,
                 userId
             });
@@ -172,3 +172,4 @@ function ContactCard({ icon, title, content, color }: { icon: React.ReactNode, t
         </div>
     );
 }
+

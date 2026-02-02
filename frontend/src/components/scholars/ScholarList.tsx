@@ -19,7 +19,7 @@ export default function ScholarList() {
     useEffect(() => {
         const fetchScholars = async () => {
             try {
-                const { data } = await axios.get("http://127.0.0.1:5000/api/scholars");
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/scholars`);
                 setScholars(data);
             } catch (error) {
                 console.error("Failed to fetch scholars", error);
@@ -73,3 +73,4 @@ export default function ScholarList() {
         </div>
     );
 }
+

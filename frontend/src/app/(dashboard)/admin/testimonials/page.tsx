@@ -29,7 +29,7 @@ export default function AdminTestimonialsPage() {
 
     const fetchTestimonials = async () => {
         try {
-            const { data } = await axios.get("http://127.0.0.1:5000/api/testimonials");
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/testimonials`);
             setTestimonials(data);
         } catch (error) {
             console.error("Failed to fetch testimonials", error);
@@ -60,7 +60,7 @@ export default function AdminTestimonialsPage() {
         formData.append("file", file);
 
         try {
-            const { data } = await axios.post("http://127.0.0.1:5000/api/upload", formData, {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/upload`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             setImage(data.url);
@@ -98,13 +98,13 @@ export default function AdminTestimonialsPage() {
 
             if (editingId) {
                 await axios.put(
-                    `http://127.0.0.1:5000/api/testimonials/${editingId}`,
+                    `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/testimonials/${editingId}`,
                     payload,
                     { headers }
                 );
             } else {
                 await axios.post(
-                    "http://127.0.0.1:5000/api/testimonials",
+                    `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/testimonials`,
                     payload,
                     { headers }
                 );
@@ -130,7 +130,7 @@ export default function AdminTestimonialsPage() {
         if (!window.confirm("Are you sure?")) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://127.0.0.1:5000/api/testimonials/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/testimonials/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchTestimonials();
@@ -282,3 +282,4 @@ export default function AdminTestimonialsPage() {
         </div>
     );
 }
+

@@ -27,7 +27,7 @@ export default function ManageModulesPage() {
 
     const fetchModules = async () => {
         try {
-            const { data } = await axios.get("http://127.0.0.1:5000/api/modules");
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/modules`);
             setModules(data);
         } catch (error) { console.error(error); }
     };
@@ -36,7 +36,7 @@ export default function ManageModulesPage() {
         const formData = new FormData();
         formData.append("file", file);
         try {
-            const { data } = await axios.post("http://127.0.0.1:5000/api/upload", formData, {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/upload`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             return data.url;
@@ -65,10 +65,10 @@ export default function ManageModulesPage() {
             };
 
             if (editingModuleId) {
-                await axios.put(`http://127.0.0.1:5000/api/modules/${editingModuleId}`, payload, config);
+                await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/modules/${editingModuleId}`, payload, config);
                 alert("Module updated!");
             } else {
-                await axios.post("http://127.0.0.1:5000/api/modules", payload, config);
+                await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/modules`, payload, config);
                 alert("Module created!");
             }
 
@@ -107,7 +107,7 @@ export default function ManageModulesPage() {
         if (!confirm("Are you sure?")) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://127.0.0.1:5000/api/modules/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/modules/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchModules();
@@ -278,3 +278,4 @@ export default function ManageModulesPage() {
         </div>
     );
 }
+

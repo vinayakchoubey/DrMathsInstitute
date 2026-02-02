@@ -35,7 +35,7 @@ export default function LoginPage() {
         setError("");
 
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/login`, {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/auth/login`, {
                 email,
                 password,
             });
@@ -57,7 +57,7 @@ export default function LoginPage() {
         setLoading(true);
         setError("");
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/resend-otp`, { email });
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/auth/resend-otp`, { email });
             setTimer(60);
             alert(`New OTP sent to ${email}`);
         } catch (err: any) {
@@ -73,7 +73,7 @@ export default function LoginPage() {
         setError("");
 
         try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/login/verify`, {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/auth/login/verify`, {
                 email,
                 otp
             });
@@ -94,7 +94,7 @@ export default function LoginPage() {
         console.log("Google Login Success Response:", credentialResponse);
         // ... (same as before)
         try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/auth/google`, {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/auth/google`, {
                 token: credentialResponse.credential
             });
             localStorage.setItem("user", JSON.stringify(data));
@@ -237,3 +237,4 @@ export default function LoginPage() {
         </div>
     );
 }
+

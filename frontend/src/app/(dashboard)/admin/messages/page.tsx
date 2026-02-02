@@ -25,7 +25,7 @@ export default function AdminMessagesPage() {
     const fetchMessages = async () => {
         try {
             const token = localStorage.getItem("token");
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000'}/api/messages`, {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/messages`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessages(data);
@@ -44,7 +44,7 @@ export default function AdminMessagesPage() {
         setSendingReply(true);
         try {
             const token = localStorage.getItem("token");
-            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000'}/api/messages/${id}/reply`,
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/messages/${id}/reply`,
                 { reply: replyText },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -65,7 +65,7 @@ export default function AdminMessagesPage() {
         if (!confirm("Are you sure you want to delete this message?")) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000'}/api/messages/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/messages/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessages(messages.filter(m => m._id !== id));
@@ -200,3 +200,4 @@ function SendIcon() {
         </svg>
     )
 }
+

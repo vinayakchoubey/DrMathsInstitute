@@ -24,14 +24,14 @@ export default function ManageAboutPage() {
 
     const fetchAbout = async () => {
         try {
-            const { data } = await axios.get("http://127.0.0.1:5000/api/about");
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/about`);
             if (data && data.instituteOverview) setAboutData(data);
         } catch (e) { console.error(e); }
     };
 
     const fetchMembers = async () => {
         try {
-            const { data } = await axios.get("http://127.0.0.1:5000/api/about/members");
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/about/members`);
             setMembers(data);
         } catch (e) { console.error("Failed to fetch members", e); }
     };
@@ -40,7 +40,7 @@ export default function ManageAboutPage() {
         const formData = new FormData();
         formData.append("file", file);
         try {
-            const { data } = await axios.post("http://127.0.0.1:5000/api/upload", formData, {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/upload`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             return data.url;
@@ -62,7 +62,7 @@ export default function ManageAboutPage() {
                 imageUrl = await handleUpload(ceoImageFile);
             }
 
-            await axios.put("http://127.0.0.1:5000/api/about", { ...aboutData, ceoImage: imageUrl }, config);
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/about`, { ...aboutData, ceoImage: imageUrl }, config);
             alert("About section updated!");
         } catch (e) {
             console.error(e);
@@ -88,10 +88,10 @@ export default function ManageAboutPage() {
             const payload = { ...memberForm, image: imageUrl };
 
             if (editingMember) {
-                await axios.put(`http://127.0.0.1:5000/api/about/members/${editingMember._id}`, payload, config);
+                await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/about/members/${editingMember._id}`, payload, config);
                 alert("Member updated successfully");
             } else {
-                await axios.post("http://127.0.0.1:5000/api/about/members", payload, config);
+                await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/about/members`, payload, config);
                 alert("Member added successfully");
             }
 
@@ -113,7 +113,7 @@ export default function ManageAboutPage() {
         if (!confirm("Delete this team member?")) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://127.0.0.1:5000/api/about/members/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/about/members/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchMembers();
@@ -157,7 +157,7 @@ export default function ManageAboutPage() {
                                 if (confirm("Are you sure you want to delete the About section?")) {
                                     try {
                                         const token = localStorage.getItem("token");
-                                        await axios.delete("http://127.0.0.1:5000/api/about", {
+                                        await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/about`, {
                                             headers: { Authorization: `Bearer ${token}` }
                                         });
                                         setAboutData({ instituteOverview: "", ceoProfile: "", ceoImage: "" });
@@ -389,3 +389,4 @@ export default function ManageAboutPage() {
         </div>
     );
 }
+

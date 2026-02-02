@@ -18,7 +18,7 @@ export default function UserDashboard() {
                 const user = JSON.parse(storedUser);
 
                 // Fetch Courses
-                const { data: allCourses } = await axios.get("http://127.0.0.1:5000/api/courses");
+                const { data: allCourses } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/courses`);
                 const purchasedIds = user.purchasedCourses || [];
                 const myCourses = allCourses.filter((course: any) =>
                     purchasedIds.includes(course._id)
@@ -84,3 +84,4 @@ export default function UserDashboard() {
         </div>
     );
 }
+

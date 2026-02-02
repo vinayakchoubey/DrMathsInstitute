@@ -19,7 +19,7 @@ export default function Footer() {
     useEffect(() => {
         const fetchPolicies = async () => {
             try {
-                const { data } = await axios.get("http://127.0.0.1:5000/api/policies");
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/policies`);
                 setPolicies(data);
             } catch (error) {
                 console.error("Failed to fetch policies", error);
@@ -200,3 +200,4 @@ function SocialLink({ href, icon, label, color }: { href: string; icon: React.Re
         </a>
     );
 }
+

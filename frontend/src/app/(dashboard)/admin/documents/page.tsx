@@ -13,7 +13,7 @@ export default function KnowledgeBasePage() {
     const fetchDocs = async () => {
         try {
             const token = localStorage.getItem("token");
-            const { data } = await axios.get("http://127.0.0.1:5000/api/rag/documents", {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/rag/documents`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setDocs(data);
@@ -32,7 +32,7 @@ export default function KnowledgeBasePage() {
         if (!confirm(`Delete ${filename}?`)) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://127.0.0.1:5000/api/rag/documents/${filename}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/rag/documents/${filename}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchDocs();
@@ -49,7 +49,7 @@ export default function KnowledgeBasePage() {
 
         try {
             const token = localStorage.getItem("token");
-            await axios.post("http://127.0.0.1:5000/api/rag/upload", formData, {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/rag/upload`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data"
@@ -171,3 +171,4 @@ export default function KnowledgeBasePage() {
         </div>
     );
 }
+

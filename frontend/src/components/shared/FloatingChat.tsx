@@ -32,7 +32,7 @@ export default function FloatingChat() {
         setLoading(true);
 
         try {
-            const { data } = await axios.post('http://localhost:5000/api/rag/chat', {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/rag/chat`, {
                 query: userMessage,
             });
 
@@ -132,3 +132,4 @@ export default function FloatingChat() {
         </div>
     );
 }
+

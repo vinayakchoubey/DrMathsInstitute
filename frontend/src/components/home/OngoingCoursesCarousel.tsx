@@ -8,6 +8,8 @@ import { ArrowRight, User, Calendar, BookOpen, Star, Sparkles, ShoppingCart } fr
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}`;
+
 interface Course {
     _id: string;
     title: string;
@@ -33,7 +35,7 @@ export default function OngoingCoursesCarousel() {
         const fetchCourses = async () => {
             try {
                 // Fetch ONLY featured courses
-                const { data } = await axios.get("http://127.0.0.1:5000/api/courses?featured=true");
+                const { data } = await axios.get(`${API_URL}/api/courses?featured=true`);
                 setCourses(data);
             } catch (error) {
                 console.error("Failed to fetch courses", error);
@@ -198,3 +200,4 @@ export default function OngoingCoursesCarousel() {
         </section>
     );
 }
+

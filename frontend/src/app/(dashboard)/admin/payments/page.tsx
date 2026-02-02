@@ -39,7 +39,7 @@ export default function AdminPaymentsPage() {
         try {
             const token = localStorage.getItem("token");
             const { data } = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/payment`,
+                `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/payment`,
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 }
@@ -208,3 +208,4 @@ export default function AdminPaymentsPage() {
         </div>
     );
 }
+

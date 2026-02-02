@@ -101,7 +101,7 @@ export default function PaymentModal({ isOpen, onClose, course, items, user }: P
             }
 
             // Create Order
-            const API_URL = 'http://localhost:5000';
+            const API_URL = `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}`;
             console.log("Creating order at", `${API_URL}/api/payment/create-order`, payload);
 
             const { data: orderData } = await axios.post(
@@ -379,3 +379,4 @@ export default function PaymentModal({ isOpen, onClose, course, items, user }: P
         </AnimatePresence>
     );
 }
+

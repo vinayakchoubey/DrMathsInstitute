@@ -29,7 +29,7 @@ export default function ModulesPage() {
         setLoading(true);
         try {
             // For now, assuming standard get without search params, or implement search in backend if needed
-            const { data } = await axios.get("http://127.0.0.1:5000/api/modules");
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/modules`);
             setModules(data);
         } catch (error) {
             console.error("Failed to fetch modules", error);
@@ -282,3 +282,4 @@ export default function ModulesPage() {
         </div>
     );
 }
+

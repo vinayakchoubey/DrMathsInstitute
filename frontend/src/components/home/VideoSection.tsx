@@ -12,7 +12,7 @@ export default function VideoSection() {
     useEffect(() => {
         const fetchVideo = async () => {
             try {
-                const { data } = await axios.get("http://localhost:5000/api/promo-video");
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/promo-video`);
                 setVideoData(data);
             } catch (error) {
                 console.error("Failed to fetch promo video", error);
@@ -122,3 +122,4 @@ export default function VideoSection() {
         </section>
     );
 }
+

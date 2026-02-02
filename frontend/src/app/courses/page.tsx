@@ -34,7 +34,7 @@ export default function CoursesPage() {
         setLoading(true);
         try {
             const query = search ? `?keyword=${search}` : "";
-            const { data } = await axios.get(`http://127.0.0.1:5000/api/courses${query}`);
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/courses${query}`);
             setCourses(data);
         } catch (error) {
             console.error("Failed to fetch courses", error);
@@ -395,3 +395,4 @@ export default function CoursesPage() {
         </div >
     );
 }
+

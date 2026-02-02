@@ -11,7 +11,7 @@ export default function ManageVideoPage() {
 
     const fetchVideo = async () => {
         try {
-            const { data } = await axios.get("http://127.0.0.1:5000/api/promo-video");
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/promo-video`);
             setVideoData(data);
         } catch (e) { console.error(e); }
         finally { setFetching(false); }
@@ -27,7 +27,7 @@ export default function ManageVideoPage() {
         try {
             const token = localStorage.getItem("token");
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            await axios.put("http://127.0.0.1:5000/api/promo-video", videoData, config);
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/promo-video`, videoData, config);
             alert("Video section updated!");
         } catch (e) {
             console.error(e);
@@ -150,3 +150,4 @@ export default function ManageVideoPage() {
         </div>
     );
 }
+

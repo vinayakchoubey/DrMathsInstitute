@@ -12,10 +12,10 @@ export default function AboutPage() {
     useEffect(() => {
         const fetchAbout = async () => {
             try {
-                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/about`);
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/about`);
                 setData(data);
 
-                const membersRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/about/members`);
+                const membersRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/about/members`);
                 setMembers(membersRes.data);
             } catch (e) {
                 console.error(e);
@@ -170,3 +170,4 @@ export default function AboutPage() {
         </div>
     );
 }
+

@@ -28,7 +28,7 @@ export default function AdminScholarsPage() {
 
     const fetchScholars = async () => {
         try {
-            const { data } = await axios.get("http://127.0.0.1:5000/api/scholars");
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/scholars`);
             setScholars(data);
         } catch (error) {
             console.error("Failed to fetch scholars", error);
@@ -59,7 +59,7 @@ export default function AdminScholarsPage() {
         formData.append("file", file);
 
         try {
-            const { data } = await axios.post("http://127.0.0.1:5000/api/upload", formData, {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/upload`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             setImage(data.url);
@@ -95,13 +95,13 @@ export default function AdminScholarsPage() {
 
             if (editingId) {
                 await axios.put(
-                    `http://127.0.0.1:5000/api/scholars/${editingId}`,
+                    `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/scholars/${editingId}`,
                     { name, image, description },
                     { headers }
                 );
             } else {
                 await axios.post(
-                    "http://127.0.0.1:5000/api/scholars",
+                    `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/scholars`,
                     { name, image, description },
                     { headers }
                 );
@@ -127,7 +127,7 @@ export default function AdminScholarsPage() {
         if (!window.confirm("Are you sure?")) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://127.0.0.1:5000/api/scholars/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/scholars/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchScholars();
@@ -330,3 +330,4 @@ export default function AdminScholarsPage() {
         </div>
     );
 }
+

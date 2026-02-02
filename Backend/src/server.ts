@@ -13,10 +13,42 @@ console.log('Starting Dr Maths Backend...');
 connectDB();
 
 // Middleware
-app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
-    credentials: true,
-}));
+const allowedOrigins = [
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://drmaths-frontend.vercel.app',
+    process.env.CLIENT_URL
+].filter(Boolean) as string[];
+
+// Handle preflight OPTIONS requests explicitly
+app.options('*', (req: Request, res: Response) => {
+    const origin = req.headers.origin;
+    if (origin && allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    } else {
+        res.setHeader('Access-Control-Allow-Origin', 'https://drmaths-frontend.vercel.app');
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Max-Age', '86400');
+    res.status(200).end();
+});
+
+// CORS middleware for all other requests
+app.use((req: Request, res: Response, next) => {
+    const origin = req.headers.origin;
+    if (origin && allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    } else if (origin) {
+        res.setHeader('Access-Control-Allow-Origin', 'https://drmaths-frontend.vercel.app');
+    }
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    next();
+});
+
 app.use(express.json());
 
 // Request logging middleware

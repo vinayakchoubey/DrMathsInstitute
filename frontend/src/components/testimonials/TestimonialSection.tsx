@@ -19,7 +19,7 @@ export default function TestimonialSection() {
     useEffect(() => {
         const fetchTestimonials = async () => {
             try {
-                const { data } = await axios.get("http://127.0.0.1:5000/api/testimonials");
+                const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/testimonials`);
                 // Distribute testimonials into 3 columns
                 const cols: Testimonial[][] = [[], [], []];
                 data.forEach((t: Testimonial, i: number) => {
@@ -97,3 +97,4 @@ function TestimonialColumn({ testimonials, duration, className = "" }: { testimo
         </div>
     );
 }
+

@@ -215,3 +215,4 @@ function Typewriter({ text }: { text: string }) {
     </span>
   );
 }
+

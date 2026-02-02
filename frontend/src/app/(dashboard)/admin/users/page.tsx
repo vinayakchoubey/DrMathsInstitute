@@ -42,7 +42,7 @@ export default function AdminUsersPage() {
                 query += query ? `&search=${searchTerm}` : `?search=${searchTerm}`;
             }
 
-            const { data } = await axios.get(`http://127.0.0.1:5000/api/users${query}`, {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/users${query}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(data);
@@ -66,7 +66,7 @@ export default function AdminUsersPage() {
         setActionLoading(userId);
         try {
             const token = localStorage.getItem("token");
-            await axios.put(`http://127.0.0.1:5000/api/users/${userId}/verify`, {}, {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/users/${userId}/verify`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             // Refresh list or update local state
@@ -304,3 +304,4 @@ export default function AdminUsersPage() {
         </div>
     );
 }
+

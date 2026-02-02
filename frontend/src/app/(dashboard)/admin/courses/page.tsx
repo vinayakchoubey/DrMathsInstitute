@@ -51,7 +51,7 @@ export default function ManageCoursesPage() {
 
     const fetchCourses = async () => {
         try {
-            const { data } = await axios.get("http://127.0.0.1:5000/api/courses");
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/courses`);
             setCourses(data);
         } catch (e) { console.error(e); }
     };
@@ -60,7 +60,7 @@ export default function ManageCoursesPage() {
         const formData = new FormData();
         formData.append("file", file);
         try {
-            const { data } = await axios.post("http://127.0.0.1:5000/api/upload", formData);
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/upload`, formData);
             return data.url;
         } catch (e) {
             console.error("Upload failed", e);
@@ -265,10 +265,10 @@ export default function ManageCoursesPage() {
             };
 
             if (editingId) {
-                await axios.put(`http://127.0.0.1:5000/api/courses/${editingId}`, coursePayload, config);
+                await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/courses/${editingId}`, coursePayload, config);
                 alert("Course updated successfully!");
             } else {
-                await axios.post("http://127.0.0.1:5000/api/courses", coursePayload, config);
+                await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/courses`, coursePayload, config);
                 alert("Course created successfully!");
             }
 
@@ -288,7 +288,7 @@ export default function ManageCoursesPage() {
         if (!confirm("Are you sure?")) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://127.0.0.1:5000/api/courses/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/courses/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchCourses();
@@ -301,7 +301,7 @@ export default function ManageCoursesPage() {
         try {
             const token = localStorage.getItem("token");
             await axios.put(
-                `http://127.0.0.1:5000/api/courses/${course._id}`,
+                `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/courses/${course._id}`,
                 { isFeatured: !course.isFeatured },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -317,7 +317,7 @@ export default function ManageCoursesPage() {
         setBuyersModal({ isOpen: true, courseName, buyers: [] });
         try {
             const token = localStorage.getItem("token");
-            const { data } = await axios.get(`http://127.0.0.1:5000/api/courses/${courseId}/buyers`, {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/courses/${courseId}/buyers`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setBuyersModal({ isOpen: true, courseName, buyers: data });
@@ -830,4 +830,5 @@ export default function ManageCoursesPage() {
         </div >
     );
 }
+
 

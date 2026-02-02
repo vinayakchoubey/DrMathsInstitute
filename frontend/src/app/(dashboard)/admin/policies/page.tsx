@@ -24,7 +24,7 @@ export default function AdminPoliciesPage() {
 
     const fetchPolicies = async () => {
         try {
-            const { data } = await axios.get("http://127.0.0.1:5000/api/policies");
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/policies`);
             setPolicies(data);
         } catch (error) {
             console.error("Failed to fetch policies", error);
@@ -69,13 +69,13 @@ export default function AdminPoliciesPage() {
 
             if (editingId) {
                 await axios.put(
-                    `http://127.0.0.1:5000/api/policies/${editingId}`,
+                    `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/policies/${editingId}`,
                     { title, content },
                     { headers }
                 );
             } else {
                 await axios.post(
-                    "http://127.0.0.1:5000/api/policies",
+                    `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/policies`,
                     { title, content },
                     { headers }
                 );
@@ -99,7 +99,7 @@ export default function AdminPoliciesPage() {
         if (!window.confirm("Are you sure?")) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://127.0.0.1:5000/api/policies/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/policies/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchPolicies();
@@ -261,3 +261,4 @@ export default function AdminPoliciesPage() {
         </div>
     );
 }
+

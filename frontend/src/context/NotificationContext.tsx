@@ -34,7 +34,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000'}/api/notifications`, {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/notifications`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setNotifications(data);
@@ -47,7 +47,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     const markAsRead = async (id: string) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/notifications/${id}/read`, {}, {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/notifications/${id}/read`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setNotifications(prev => prev.map(n => n._id === id ? { ...n, isRead: true } : n));
@@ -60,7 +60,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
     const markAllAsRead = async () => {
         try {
             const token = localStorage.getItem('token');
-            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/notifications/read-all`, {}, {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/notifications/read-all`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
@@ -91,3 +91,4 @@ export function useNotifications() {
     }
     return context;
 }
+

@@ -33,7 +33,7 @@ export default function ProfilePage() {
         try {
             const token = localStorage.getItem("token");
             if (!token) return;
-            const { data } = await axios.get("http://127.0.0.1:5000/api/messages/my-messages", {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/messages/my-messages`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessages(data);
@@ -46,7 +46,7 @@ export default function ProfilePage() {
         if (!confirm("Delete this message?")) return;
         try {
             const token = localStorage.getItem("token");
-            await axios.delete(`http://127.0.0.1:5000/api/messages/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/messages/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessages(prev => prev.filter(m => m._id !== id));
@@ -84,7 +84,7 @@ export default function ProfilePage() {
             const token = localStorage.getItem("token");
             if (!token) return;
 
-            const { data } = await axios.get("http://127.0.0.1:5000/api/auth/profile", {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/auth/profile`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -120,7 +120,7 @@ export default function ProfilePage() {
 
         try {
             // 1. Upload to Cloudinary via backend
-            const uploadRes = await axios.post("http://127.0.0.1:5000/api/upload", formData, {
+            const uploadRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/upload`, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
 
@@ -128,7 +128,7 @@ export default function ProfilePage() {
 
             // 2. Update user profile with new image URL
             const token = localStorage.getItem("token");
-            await axios.put("http://127.0.0.1:5000/api/auth/profile",
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/auth/profile`,
                 { profileImage: imageUrl },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -148,7 +148,7 @@ export default function ProfilePage() {
         setLoading(true);
         try {
             const token = localStorage.getItem("token");
-            await axios.put("http://127.0.0.1:5000/api/auth/profile", formData, {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}/api/auth/profile`, formData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -427,3 +427,4 @@ function DetailRow({
         </div>
     );
 }
+
