@@ -12,35 +12,32 @@ const PORT = process.env.PORT || 5000;
 console.log('Starting Dr Maths Backend...');
 connectDB();
 
-// Middleware
+// Middleware - CORS configuration
 const allowedOrigins = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-    'https://drmaths-frontend.vercel.app',
-    process.env.CLIENT_URL
-].filter(Boolean) as string[];
+    'https://drmaths-frontend.vercel.app'
+];
 
-// Use cors middleware - this properly handles preflight OPTIONS requests
-app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
+// Add CLIENT_URL if it exists and is not already in the list
+if (process.env.CLIENT_URL && !allowedOrigins.includes(process.env.CLIENT_URL)) {
+    allowedOrigins.push(process.env.CLIENT_URL);
+}
 
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            // For any other origin, use the production frontend URL
-            callback(null, 'https://drmaths-frontend.vercel.app');
-        }
-    },
+const corsOptions = {
+    origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-    maxAge: 86400 // Cache preflight response for 24 hours
-}));
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+    optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+    maxAge: 86400
+};
 
-// Handle preflight requests explicitly as a backup
-app.options('*', cors());
+// Enable pre-flight across-the-board
+app.options('*', cors(corsOptions));
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
