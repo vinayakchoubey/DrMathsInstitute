@@ -9,8 +9,10 @@ const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
 // Connect to Database
-console.log('Starting Dr Maths Backend...');
-connectDB();
+if (process.env.VERCEL !== '1') {
+    console.log('Starting Dr Maths Backend (Standalone Mode)...');
+    connectDB();
+}
 
 // Middleware - CORS configuration
 const allowedOrigins = [
