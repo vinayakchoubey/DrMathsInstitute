@@ -95,13 +95,15 @@ app.use('/api/notifications', notificationRoutes);
 
 // Trigger Restart v2
 app.get('/', (req: Request, res: Response) => {
-    res.send('Dr Maths Institute API is running... (v3)');
+    res.send('Dr Maths Institute API is running... (v4)');
 });
 
-// app.listen is likely already handled if I see below
-// Wait, the original file had it at the bottom.
-// I will just keep one listener using the PORT variable defined at top.
+// Only listen when not running on Vercel (Vercel handles this automatically)
+if (process.env.VERCEL !== '1') {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Export for Vercel serverless functions
+export default app;
