@@ -1,13 +1,15 @@
 import axios from 'axios';
 
 // API base URL - uses environment variable in production, localhost in development
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"}`;
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000';
 
 // Create axios instance with default configuration
 export const api = axios.create({
     baseURL: API_URL,
+    withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
     },
 });
 
@@ -23,6 +25,11 @@ export const getAuthHeader = () => {
 // Axios instance with auth
 export const authApi = axios.create({
     baseURL: API_URL,
+    withCredentials: true,
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    },
 });
 
 // Add auth interceptor
