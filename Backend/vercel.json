@@ -6,28 +6,10 @@
             "use": "@vercel/node"
         }
     ],
-    "routes": [
+    "rewrites": [
         {
-            "src": "/(.*)",
-            "methods": [
-                "OPTIONS"
-            ],
-            "dest": "/api/index.ts",
-            "headers": {
-                "Access-Control-Allow-Origin": "https://drmaths-frontend.vercel.app",
-                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With, Accept, Origin",
-                "Access-Control-Allow-Credentials": "true",
-                "Access-Control-Max-Age": "86400"
-            }
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/api/index.ts",
-            "headers": {
-                "Access-Control-Allow-Origin": "https://drmaths-frontend.vercel.app",
-                "Access-Control-Allow-Credentials": "true"
-            }
+            "source": "/(.*)",
+            "destination": "/api/index.ts"
         }
     ]
 }
