@@ -1,7 +1,13 @@
 {
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/api"
+        }
+    ],
     "headers": [
         {
-            "source": "/api/(.*)",
+            "source": "/(.*)",
             "headers": [
                 {
                     "key": "Access-Control-Allow-Origin",
@@ -14,19 +20,6 @@
                 {
                     "key": "Access-Control-Allow-Headers",
                     "value": "Content-Type, Authorization, X-Requested-With"
-                },
-                {
-                    "key": "Access-Control-Allow-Credentials",
-                    "value": "true"
-                }
-            ]
-        },
-        {
-            "source": "/(.*)",
-            "headers": [
-                {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "https://drmaths-frontend.vercel.app"
                 },
                 {
                     "key": "Access-Control-Allow-Credentials",
