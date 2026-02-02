@@ -1,5 +1,7 @@
 {
     "version": 2,
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist",
     "builds": [
         {
             "src": "dist/server.js",
@@ -12,21 +14,17 @@
             "methods": [
                 "OPTIONS"
             ],
-            "dest": "dist/server.js",
             "headers": {
                 "Access-Control-Allow-Origin": "https://drmaths-frontend.vercel.app",
                 "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
                 "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Authorization",
                 "Access-Control-Allow-Credentials": "true"
-            }
+            },
+            "continue": true
         },
         {
             "src": "/(.*)",
-            "dest": "dist/server.js",
-            "headers": {
-                "Access-Control-Allow-Origin": "https://drmaths-frontend.vercel.app",
-                "Access-Control-Allow-Credentials": "true"
-            }
+            "dest": "dist/server.js"
         }
     ]
 }
