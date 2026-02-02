@@ -1,0 +1,44 @@
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  // Get the path
+  const path = request.nextUrl.pathname;
+
+  // Define public paths that don't require authentication
+  const publicPaths = ['/', '/login', '/signup', '/api/auth/login', '/api/auth/signup'];
+
+  // Check if the current path is public
+  const isPublicPath = publicPaths.some(publicPath => 
+    path === publicPath || path.startsWith('/api/public')
+  );
+
+  // Consider static files and images public
+  if (path.startsWith('/_next') || path.startsWith('/static') || path.match(/\.(png|jpg|jpeg|gif|svg|ico)$/)) {
+    return NextResponse.next();
+  }
+
+  // Allow access to about page? The user said "Everything which are personal". 
+  // Usually About page is public. I'll assume /about is public if it exists. 
+  // But strictly, "can not see the courses". /courses should be protected.
+  
+  // If use has token in cookies or localstorage? 
+  // Middleware can only read cookies. LocalStorage is client-side.
+  // We need to set a cookie on login... 
+  // Currently the app uses localStorage for tokens (seen in login page code: localStorage.setItem("token", ...))
+  
+  // Since we are using localStorage, Server-Side Middleware cannot easily check auth status unless we also set a cookie.
+  // Options:
+  // 1. Refactor Login to set a cookie.
+  // 2. Use Client-Side protection (HOC or useEffect) in a layout wrapper.
+  
+  // Given the current setup (localStorage), Middleware won't work perfectly for redirection *before* render unless we switch to cookies.
+  // However, for a quick robust solution without refactoring the whole auth system to cookies right now:
+  // I will implement a client-side protection component `AuthGuard` or simply add a check in the main layout or individual pages.
+  // BUT, Middleware is better. 
+  
+  // Let's stick to client-side protection for now to avoid breaking existing auth flow, 
+  // OR update login to set a cookie. Setting a cookie is cleaner.
+  
+  // Let's try to read the "token" cookie. If I modify login to set it.
+}
