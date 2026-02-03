@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
@@ -8,11 +8,17 @@ dotenv.config();
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
-// Connect to Database
-if (process.env.VERCEL !== '1') {
-    console.log('Starting Dr Maths Backend (Standalone Mode)...');
-    connectDB();
-}
+// Connect to Database Middleware
+// This ensures DB is connected before any request is processed
+app.use(async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error('Database connection failed:', error);
+        res.status(500).json({ error: 'Database connection failed' });
+    }
+});
 
 // Middleware - CORS configuration
 const allowedOrigins = [
@@ -21,21 +27,15 @@ const allowedOrigins = [
     'https://drmaths-frontend.vercel.app'
 ];
 
-// Add CLIENT_URL if it exists and is not already in the list
-if (process.env.CLIENT_URL && !allowedOrigins.includes(process.env.CLIENT_URL)) {
-    allowedOrigins.push(process.env.CLIENT_URL);
-}
-
 const corsOptions = {
     origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-    optionsSuccessStatus: 200, // Some legacy browsers choke on 204
-    maxAge: 86400
+    maxAge: 86400 // Cache preflight response for 24 hours
 };
 
-// Enable pre-flight across-the-board
+// Enable pre-flight request handling for ALL routes
 app.options('*', cors(corsOptions));
 
 // Apply CORS middleware
@@ -46,9 +46,6 @@ app.use(express.json());
 // Request logging middleware
 app.use((req: Request, res: Response, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-    if (req.body && Object.keys(req.body).length > 0) {
-        console.log('Body:', JSON.stringify(req.body, null, 2));
-    }
     next();
 });
 
