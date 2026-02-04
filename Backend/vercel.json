@@ -8,35 +8,14 @@
     ],
     "routes": [
         {
-            "src": "/api/(.*)",
-            "dest": "/api/index.ts"
-        },
-        {
             "src": "/(.*)",
-            "dest": "/api/index.ts"
-        }
-    ],
-    "headers": [
-        {
-            "source": "/(.*)",
-            "headers": [
-                {
-                    "key": "Access-Control-Allow-Credentials",
-                    "value": "true"
-                },
-                {
-                    "key": "Access-Control-Allow-Origin",
-                    "value": "https://drmaths-frontend.vercel.app"
-                },
-                {
-                    "key": "Access-Control-Allow-Methods",
-                    "value": "GET,POST,PUT,DELETE,PATCH,OPTIONS"
-                },
-                {
-                    "key": "Access-Control-Allow-Headers",
-                    "value": "Content-Type, Authorization, X-Requested-With, Accept, Origin"
-                }
-            ]
+            "dest": "/api/index.ts",
+            "headers": {
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Origin": "https://drmaths-frontend.vercel.app",
+                "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,PATCH,OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With, Accept, Origin"
+            }
         }
     ]
 }
