@@ -33,11 +33,9 @@
     "razorpay": "^2.9.6"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^3.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/mongoose": "^5.11.97",
     "@types/multer": "^2.0.0",
     "@types/node": "^25.0.2",
     "@types/nodemailer": "^7.0.4",
