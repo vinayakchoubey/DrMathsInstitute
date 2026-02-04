@@ -4,7 +4,7 @@ import { uploadDocument, chatWithBot, getDocuments } from '../controllers/ragCon
 import { protect, admin } from '../middleware/authMiddleware';
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' }); // Temporary storage
+const upload = multer({ dest: '/tmp/' }); // Use /tmp for Vercel serverless
 
 // Admin Routes for Documents
 router.post('/upload', protect, admin, upload.single('file'), uploadDocument);
