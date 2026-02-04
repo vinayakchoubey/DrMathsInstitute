@@ -1,9 +1,9 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
-import connectDB from './config/db';
+// import dotenv from 'dotenv';
+// import connectDB from './config/db';
 
-dotenv.config();
+// dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
@@ -61,6 +61,7 @@ app.get('/api/health', (req: Request, res: Response) => {
 });
 
 // Connect to Database Middleware (AFTER CORS so preflight works even if DB is slow)
+/*
 app.use(async (req: Request, res: Response, next: NextFunction) => {
     try {
         await connectDB();
@@ -70,6 +71,7 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
         res.status(500).json({ error: 'Database connection failed' });
     }
 });
+*/
 
 /*
 import authRoutes from './routes/authRoutes';
@@ -114,9 +116,11 @@ app.get('/', (req: Request, res: Response) => {
 // Only listen when not running on Vercel (Vercel handles this automatically)
 if (process.env.VERCEL !== '1') {
     console.log('Starting Dr Maths Backend (Standalone Mode)...');
+    /*
     connectDB().catch(err => {
         console.error('Initial DB Connection Failed (Will retry on request):', err.message);
     });
+    */
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
     });
