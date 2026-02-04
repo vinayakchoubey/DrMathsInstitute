@@ -3,21 +3,26 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 dotenv.config();
 
-// Access your API key as an environment variable
-const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || "";
-const genAI = new GoogleGenerativeAI(apiKey);
+// Lazy initialization to prevent startup crash if API key is missing
+let genAI: GoogleGenerativeAI | null = null;
+
+function getGenAI(): GoogleGenerativeAI {
+    if (!genAI) {
+        const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+        if (!apiKey) {
+            throw new Error("Missing Gemini API Key (GEMINI_API_KEY or GOOGLE_API_KEY)");
+        }
+        genAI = new GoogleGenerativeAI(apiKey);
+    }
+    return genAI;
+}
 
 export const chatWithGemini = async (req: Request, res: Response) => {
     try {
         const { message, history } = req.body;
 
-        if (!apiKey) {
-            console.error("Gemini API Key is missing. Checked GEMINI_API_KEY and GOOGLE_API_KEY.");
-            return res.status(500).json({ message: "Server configuration error: API Key missing." });
-        }
-
         // For text-only input, use the gemini-pro model
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = getGenAI().getGenerativeModel({ model: "gemini-pro" });
 
         let chat;
         if (history && Array.isArray(history)) {
