@@ -36,23 +36,7 @@ const corsOptions: cors.CorsOptions = {
 // Apply CORS middleware
 app.use(cors(corsOptions));
 
-// Manual CORS headers for Vercel serverless (belt and suspenders approach)
-app.use((req: Request, res: Response, next: NextFunction) => {
-    const origin = req.headers.origin;
-    if (origin && allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-        res.setHeader('Access-Control-Allow-Credentials', 'true');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
-    }
 
-    // Handle preflight requests immediately
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
-
-    next();
-});
 
 app.use(express.json());
 
