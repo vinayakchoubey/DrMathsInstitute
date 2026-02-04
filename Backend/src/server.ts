@@ -71,6 +71,7 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
     }
 });
 
+/*
 import authRoutes from './routes/authRoutes';
 import courseRoutes from './routes/courseRoutes';
 import uploadRoutes from './routes/uploadRoutes';
@@ -103,6 +104,7 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/rag', ragRoutes);
 app.use('/api/notifications', notificationRoutes);
+*/
 
 // Trigger Restart v2
 app.get('/', (req: Request, res: Response) => {
