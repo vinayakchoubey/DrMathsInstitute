@@ -46,6 +46,20 @@ app.use((req: Request, res: Response, next) => {
     next();
 });
 
+// Health Check (Bypass DB)
+app.get('/api/health', (req: Request, res: Response) => {
+    res.status(200).json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        env: {
+            node_env: process.env.NODE_ENV,
+            vercel: process.env.VERCEL,
+            mongo_uri_set: !!process.env.MONGO_URI,
+            db_name: process.env.MONGO_URI ? process.env.MONGO_URI.split('/').pop()?.split('?')[0] : 'unknown'
+        }
+    });
+});
+
 // Connect to Database Middleware (AFTER CORS so preflight works even if DB is slow)
 app.use(async (req: Request, res: Response, next: NextFunction) => {
     try {
