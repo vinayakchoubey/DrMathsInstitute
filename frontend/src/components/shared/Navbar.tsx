@@ -125,14 +125,16 @@ export default function Navbar() {
                             )}
 
                             {/* Cart Icon */}
-                            <Link href="/cart" className="relative p-2 hover:bg-white/5 rounded-full transition-colors mr-2">
-                                <ShoppingCart size={24} className="text-gray-300" />
-                                {cartItems.length > 0 && (
-                                    <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
-                                        {cartItems.length}
-                                    </span>
-                                )}
-                            </Link>
+                            {user && (
+                                <Link href="/cart" className="relative p-2 hover:bg-white/5 rounded-full transition-colors mr-2">
+                                    <ShoppingCart size={24} className="text-gray-300" />
+                                    {cartItems.length > 0 && (
+                                        <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
+                                            {cartItems.length}
+                                        </span>
+                                    )}
+                                </Link>
+                            )}
 
                             {user ? (
                                 <div className="relative" ref={dropdownRef}>
@@ -186,12 +188,10 @@ export default function Navbar() {
                                 </div>
                             ) : (
                                 <div className="flex items-center gap-4">
-                                    <Link href="/login" className="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                    <Link href="/login" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:-translate-y-0.5">
                                         Login
                                     </Link>
-                                    <Link href="/signup" className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                                        Sign Up
-                                    </Link>
+
                                 </div>
                             )}
                         </div>
@@ -244,12 +244,10 @@ export default function Navbar() {
                             </div>
                         ) : (
                             <div className="grid grid-cols-2 gap-4 mt-4 px-2">
-                                <Link href="/login" className="block text-center px-3 py-2 rounded-md text-base font-medium bg-secondary hover:bg-secondary/80">
+                                <Link href="/login" className="block text-center px-4 py-3 rounded-xl text-base font-semibold bg-secondary/50 hover:bg-secondary/80 text-white transition-all border border-white/5">
                                     Login
                                 </Link>
-                                <Link href="/signup" className="block text-center px-3 py-2 rounded-md text-base font-medium bg-primary text-primary-foreground hover:bg-primary/90">
-                                    Sign Up
-                                </Link>
+
                             </div>
                         )}
                     </div>
