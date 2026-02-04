@@ -1,11 +1,13 @@
 import express from 'express';
 import multer from 'multer';
-import { storage } from '../config/cloudinary';
+import { getStorage } from '../config/cloudinary';
 
 const router = express.Router();
-const upload = multer({ storage });
+
+// Lazy initialization of multer with cloudinary storage
 
 router.post('/', (req, res) => {
+    const upload = multer({ storage: getStorage() });
     upload.single('file')(req, res, (err: any) => {
         if (err) {
             console.error('Upload Error:', err);
