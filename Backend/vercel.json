@@ -8,11 +8,11 @@
     ],
     "routes": [
         {
-            "src": "/(.*)",
+            "src": "/api/(.*)",
             "methods": [
                 "OPTIONS"
             ],
-            "dest": "/api/index.ts",
+            "status": 204,
             "headers": {
                 "Access-Control-Allow-Credentials": "true",
                 "Access-Control-Allow-Origin": "https://drmaths-frontend.vercel.app",
