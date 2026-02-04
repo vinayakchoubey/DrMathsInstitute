@@ -4,19 +4,27 @@ import fs from 'fs';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { DocumentMetadata, DocumentChunk } from '../models/Document';
 
-// Initialize Gemini
-const API_KEY = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
-if (!API_KEY) {
-    console.error("CRITICAL: No API Key found for Gemini in GOOGLE_API_KEY or GEMINI_API_KEY");
+// Lazy initialization for Gemini (to handle serverless cold starts)
+let genAI: GoogleGenerativeAI | null = null;
+
+function getGenAI(): GoogleGenerativeAI {
+    if (!genAI) {
+        const API_KEY = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+        if (!API_KEY) {
+            console.error("CRITICAL: No API Key found for Gemini in GOOGLE_API_KEY or GEMINI_API_KEY");
+            throw new Error("Missing Gemini API Key");
+        }
+        genAI = new GoogleGenerativeAI(API_KEY);
+    }
+    return genAI;
 }
-const genAI = new GoogleGenerativeAI(API_KEY!);
 
 // Helper to get embedding
 // Helper to get embedding with retry logic and rate limiting
 async function getEmbedding(text: string, retries = 5, delay = 5000) {
     for (let i = 0; i < retries; i++) {
         try {
-            const model = genAI.getGenerativeModel({ model: "embedding-001" });
+            const model = getGenAI().getGenerativeModel({ model: "embedding-001" });
             const result = await model.embedContent(text);
             return result.embedding.values;
         } catch (error: any) {
@@ -227,7 +235,7 @@ export const chatWithBot = async (req: Request, res: Response) => {
         }
 
         // 4. Generate Response
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = getGenAI().getGenerativeModel({ model: "gemini-pro" });
 
         const systemPrompt = `You are a strict, helpful AI assistant for Dr. Maths Institute. You must answer the user's question explicitly and ONLY using the provided context below.
         
