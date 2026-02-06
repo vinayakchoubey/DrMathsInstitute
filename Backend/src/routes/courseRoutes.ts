@@ -9,7 +9,7 @@ router.route('/')
     .post(protect, admin, createCourse);
 
 router.route('/:id')
-    .get(getCourseById) // Potentially protected later for content access
+    .get(getCourseById) 
     .put(protect, admin, updateCourse)
     .delete(protect, admin, deleteCourse);
 
