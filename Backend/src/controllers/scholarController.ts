@@ -5,7 +5,7 @@ import Scholar from '../models/Scholar';
 export const getScholars = async (req: Request, res: Response) => {
     try {
         const scholars = await Scholar.find({});
-        res.json(scholars);
+        return res.json(scholars);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching scholars', error });
     }

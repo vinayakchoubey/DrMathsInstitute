@@ -62,7 +62,7 @@ export default function MainLayout({
     }
 
     const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-    console.log("Google Client ID:", clientId);
+
 
     return (
         <GoogleOAuthProvider clientId={clientId || ""}>

@@ -31,7 +31,8 @@ const connectDB = async () => {
         const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/drmaths';
 
         console.log('Creating new MongoDB connection...');
-        cached.promise = mongoose.connect(mongoUri, opts).then((mongoose) => {
+        cached.promise =  mongoose.connect(mongoUri, opts)
+        .then((mongoose) => {
             console.log(`MongoDB Connected: ${mongoose.connection.host}`);
             return mongoose;
         });
