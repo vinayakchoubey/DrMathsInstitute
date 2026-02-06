@@ -1,9 +1,9 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-// import dotenv from 'dotenv';
-// import connectDB from './config/db';
+import dotenv from 'dotenv';
+import connectDB from './config/db';
 
-// dotenv.config();
+dotenv.config();
 
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
@@ -61,19 +61,21 @@ app.get('/api/health', (req: Request, res: Response) => {
 });
 
 // Connect to Database Middleware (AFTER CORS so preflight works even if DB is slow)
-/*
 app.use(async (req: Request, res: Response, next: NextFunction) => {
     try {
         await connectDB();
         next();
     } catch (error) {
         console.error('Database connection failed:', error);
-        res.status(500).json({ error: 'Database connection failed' });
+        res.status(500).json({
+            error: 'Database connection failed',
+            details: error instanceof Error ? error.message : String(error),
+            hint: 'Check if MONGO_URI environment variable is set in Vercel',
+            mongo_uri_set: !!process.env.MONGO_URI
+        });
     }
 });
-*/
 
-/*
 import authRoutes from './routes/authRoutes';
 import courseRoutes from './routes/courseRoutes';
 import uploadRoutes from './routes/uploadRoutes';
@@ -106,7 +108,6 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/rag', ragRoutes);
 app.use('/api/notifications', notificationRoutes);
-*/
 
 // Trigger Restart v2
 app.get('/', (req: Request, res: Response) => {
@@ -116,11 +117,9 @@ app.get('/', (req: Request, res: Response) => {
 // Only listen when not running on Vercel (Vercel handles this automatically)
 if (process.env.VERCEL !== '1') {
     console.log('Starting Dr Maths Backend (Standalone Mode)...');
-    /*
     connectDB().catch(err => {
         console.error('Initial DB Connection Failed (Will retry on request):', err.message);
     });
-    */
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
     });
