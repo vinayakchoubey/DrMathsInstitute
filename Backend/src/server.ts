@@ -62,6 +62,9 @@ app.get('/api/health', (req: Request, res: Response) => {
 
 // Connect to Database Middleware (AFTER CORS so preflight works even if DB is slow)
 app.use(async (req: Request, res: Response, next: NextFunction) => {
+    if (req.method === 'OPTIONS') {
+        return next();
+    }
     try {
         await connectDB();
         next();
