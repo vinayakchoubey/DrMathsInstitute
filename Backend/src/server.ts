@@ -5,6 +5,13 @@ import connectDB from './config/db';
 
 dotenv.config();
 
+// Log environment status for debugging (runs once at cold start)
+console.log('[Server] Starting... Environment check:', {
+    MONGO_URI_SET: !!process.env.MONGO_URI,
+    VERCEL: process.env.VERCEL,
+    NODE_ENV: process.env.NODE_ENV
+});
+
 const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
