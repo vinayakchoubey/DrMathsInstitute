@@ -121,7 +121,7 @@ app.use('/api/notifications', notificationRoutes);
 
 // Trigger Restart v2
 app.get('/', (req: Request, res: Response) => {
-    res.send('Dr Maths Institute API is running... (v4)');
+    res.send('Dr Maths Institute API is running... (v5)');
 });
 
 // Only listen when not running on Vercel (Vercel handles this automatically)
