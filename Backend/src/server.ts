@@ -19,7 +19,8 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-    'https://drmaths-frontend.vercel.app'
+    'https://drmaths-frontend.vercel.app',
+    'https://dr-maths-institute-ohwp.vercel.app'
 ];
 
 const corsOptions: cors.CorsOptions = {
