@@ -16,6 +16,7 @@ const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware - CORS configuration (MUST BE FIRST)
+// Middleware - CORS configuration (MUST BE FIRST)
 const allowedOrigins = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
@@ -32,7 +33,8 @@ const corsOptions: cors.CorsOptions = {
             callback(null, true);
         } else {
             console.log(`CORS blocked origin: ${origin}`);
-            callback(null, false);
+            // Return an Error object as first parameter when rejecting
+            callback(new Error(`CORS blocked: Origin ${origin} not allowed`), false);
         }
     },
     credentials: true,
@@ -138,3 +140,4 @@ if (process.env.VERCEL !== '1') {
 
 // Export for Vercel serverless functions
 export default app;
+ 
