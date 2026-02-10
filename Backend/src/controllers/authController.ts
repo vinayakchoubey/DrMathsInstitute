@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
 import User, { IUser } from '../models/User';
-import Otp from '../models/Otp'; // Ensure this model exists
+import Otp from '../models/Otp';
 import { sendEmail } from '../services/emailService';
 
 const generateToken = (id: string, role: string) => {
@@ -66,11 +66,13 @@ export const finalizeSignup = async (req: Request, res: Response) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        const role = email === 'vinayakchoubey123@gmail.com' ? 'admin' : 'client';
+
         const user = await User.create({
             name,
             email,
             password: hashedPassword,
-            role: 'client',
+            role,
         });
 
         await Otp.deleteOne({ _id: validOtp._id });
@@ -235,12 +237,14 @@ export const googleLogin = async (req: Request, res: Response) => {
                 });
             } else {
                 // Create new user
+                const role = email === 'vinayakchoubey123@gmail.com' ? 'admin' : 'client';
+
                 const newUser = await User.create({
                     name,
                     email,
                     googleId,
                     profileImage: picture,
-                    role: 'client', // Default role
+                    role, // Default role based on email check
                     // No password for google users
                 });
 
