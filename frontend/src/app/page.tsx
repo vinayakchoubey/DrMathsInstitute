@@ -126,7 +126,6 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            variants={staggerContainer}
             className="w-full"
           >
             {/* Mobile View: 3D Carousel */}
