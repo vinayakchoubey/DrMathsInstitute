@@ -57,16 +57,28 @@ export default function Navbar() {
     return (
         <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
-                    <div className="flex items-center">
+                <div className="flex items-center justify-between h-16 w-full">
+                    {/* Mobile: Hamburger Menu (Left) */}
+                    <div className="flex md:hidden">
+                        <button
+                            onClick={() => setIsOpen(!isOpen)}
+                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
+                        >
+                            {isOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
+                        </button>
+                    </div>
+
+                    {/* Logo (Centered on Mobile, Left on Desktop) */}
+                    <div className="flex-1 flex justify-center md:justify-start">
                         <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                             Dr Maths
                         </Link>
                     </div>
+
+                    {/* Desktop Menu */}
                     <div className="hidden md:block">
                         <div className="ml-10 flex items-center space-x-6">
-
-                            {/* Notification Bell */}
+                            {/* ... existing desktop items ... */}
                             {user && (
                                 <div className="relative" ref={notificationRef}>
                                     <button
@@ -80,7 +92,6 @@ export default function Navbar() {
                                             </span>
                                         )}
                                     </button>
-
                                     {showNotifications && (
                                         <div className="absolute right-0 mt-2 w-80 bg-card border border-white/10 rounded-xl shadow-2xl py-2 animate-in fade-in zoom-in-95 duration-200 overflow-hidden z-50">
                                             <div className="px-4 py-2 border-b border-white/10 flex justify-between items-center">
@@ -135,6 +146,7 @@ export default function Navbar() {
                                     )}
                                 </Link>
                             )}
+
 
                             {user ? (
                                 <div className="relative" ref={dropdownRef}>
@@ -191,18 +203,28 @@ export default function Navbar() {
                                     <Link href="/login" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:-translate-y-0.5">
                                         Login
                                     </Link>
-
                                 </div>
                             )}
                         </div>
                     </div>
-                    <div className="-mr-2 flex md:hidden">
-                        <button
-                            onClick={() => setIsOpen(!isOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
-                        >
-                            {isOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
-                        </button>
+
+                    {/* Mobile Right: Login Button (Visible only on Mobile) */}
+                    <div className="md:hidden flex items-center">
+                        {!user ? (
+                            <Link href="/login" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-3 py-1.5 rounded-md text-[10px] font-bold shadow-md uppercase tracking-wide">
+                                Login/Register
+                            </Link>
+                        ) : (
+                            <Link href="/profile" className="flex items-center gap-2">
+                                {user.profileImage ? (
+                                    <img src={user.profileImage} alt={user.name} className="w-8 h-8 rounded-full object-cover ring-2 ring-blue-500" />
+                                ) : (
+                                    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-blue-500">
+                                        {user.name.charAt(0).toUpperCase()}
+                                    </div>
+                                )}
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>
@@ -243,11 +265,17 @@ export default function Navbar() {
                                 </button>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-2 gap-4 mt-4 px-2">
-                                <Link href="/login" className="block text-center px-4 py-3 rounded-xl text-base font-semibold bg-secondary/50 hover:bg-secondary/80 text-white transition-all border border-white/5">
-                                    Login
+                            <div className="flex flex-col gap-4 mt-4 px-4 pb-4">
+                                <Link
+                                    href="/login"
+                                    className="block text-center w-full px-4 py-3 rounded-full text-base font-bold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-lg hover:shadow-blue-500/25 transition-all duration-300 transform hover:-translate-y-0.5"
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    Login / Sign Up
                                 </Link>
-
+                                <p className="text-center text-xs text-gray-400">
+                                    Join us to access premium courses
+                                </p>
                             </div>
                         )}
                     </div>

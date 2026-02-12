@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import { ArrowRight, BookOpen, Video, Award } from "lucide-react";
@@ -9,6 +9,8 @@ import TestimonialSection from "@/components/testimonials/TestimonialSection";
 import Scholar3DCarousel from "@/components/scholars/Scholar3DCarousel";
 import OngoingCoursesCarousel from "@/components/home/OngoingCoursesCarousel";
 import VideoSection from "@/components/home/VideoSection";
+import MobileHeroCarousel from "@/components/home/MobileHeroCarousel";
+import MobileFeatureCarousel from "@/components/home/MobileFeatureCarousel";
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -25,13 +27,37 @@ const staggerContainer: Variants = {
   }
 };
 
+
+
 export default function Home() {
+  const featureRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (featureRef.current && window.innerWidth < 768) {
+        const { scrollLeft, scrollWidth, clientWidth } = featureRef.current;
+        const scrollAmount = clientWidth; // Scroll by one view width (since cards are basically full width on mobile)
+
+        if (scrollLeft + clientWidth >= scrollWidth - 50) {
+          featureRef.current.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          featureRef.current.scrollBy({ left: scrollAmount * 0.85, behavior: "smooth" });
+        }
+      }
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     // Unified Background Wrapper - Deep Space Theme
     <div className="flex flex-col min-h-screen bg-[#020617] text-white overflow-hidden">
 
+      <MobileHeroCarousel />
+
+
+
       {/* Hero Section */}
-      <section className="relative w-full py-32 flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8">
+      <section className="relative w-full py-12 md:py-32 flex flex-col items-center justify-center text-center px-4 sm:px-6 lg:px-8">
         {/* Abstract Background Blobs */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[128px] pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[128px] pointer-events-none" />
@@ -64,7 +90,7 @@ export default function Home() {
             </span>
           </h1>
 
-          <p className="max-w-2xl mx-auto text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed">
+          <p className="hidden md:block max-w-2xl mx-auto text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed">
             Unlock your potential with expert coaching, comprehensive courses, and a learning experience designed for success. Join the league of top rankers today.
           </p>
 
@@ -100,35 +126,47 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            variants={staggerContainer}
+            className="w-full"
           >
-            <FeatureCard
-              icon={<BookOpen className="w-10 h-10 text-blue-400" />}
-              title="Comprehensive Material"
-              description="Access detailed PDF notes and study guides curated by experts."
-              delay={0}
-            />
-            <FeatureCard
-              icon={<Video className="w-10 h-10 text-purple-400" />}
-              title="Video Lectures"
-              description="High-quality video sessions explaining complex concepts simply."
-              delay={0.2}
-            />
-            <FeatureCard
-              icon={<Award className="w-10 h-10 text-pink-400" />}
-              title="Proven Success"
-              description="Join hundreds of students who have achieved top results."
-              delay={0.4}
-            />
+            {/* Mobile View: 3D Carousel */}
+            <div className="md:hidden">
+              <MobileFeatureCarousel />
+            </div>
+
+            {/* Desktop View: Grid */}
+            <div className="hidden md:grid md:grid-cols-3 gap-8">
+              <FeatureCard
+                icon={<BookOpen className="w-10 h-10 text-blue-400" />}
+                title="Comprehensive Material"
+                description="Access detailed PDF notes and study guides curated by experts."
+                delay={0}
+                gradient="from-blue-500/20 to-purple-500/20"
+              />
+              <FeatureCard
+                icon={<Video className="w-10 h-10 text-purple-400" />}
+                title="Video Lectures"
+                description="High-quality video sessions explaining complex concepts simply."
+                delay={0.2}
+                gradient="from-purple-500/20 to-pink-500/20"
+              />
+              <FeatureCard
+                icon={<Award className="w-10 h-10 text-pink-400" />}
+                title="Proven Success"
+                description="Join hundreds of students who have achieved top results."
+                delay={0.4}
+                gradient="from-pink-500/20 to-red-500/20"
+              />
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* Top Ongoing Courses Section */}
-      <OngoingCoursesCarousel />
+      < OngoingCoursesCarousel />
 
       {/* Top Scholars Section - 3D Sphere/Carousel */}
-      <section className="w-full py-32 relative overflow-visible">
+      <section className="w-full py-32 relative overflow-visible" >
         {/* Background Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none" />
 
@@ -148,33 +186,40 @@ export default function Home() {
             <Scholar3DCarousel />
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Testimonials Section - Already Animated */}
-      <div className="relative z-10">
+      < div className="relative z-10" >
         <TestimonialSection />
-      </div>
+      </div >
 
       {/* Video Section */}
-      <VideoSection />
+      < VideoSection />
 
-    </div>
+    </div >
   );
 }
 
-function FeatureCard({ icon, title, description, delay }: { icon: React.ReactNode; title: string; description: string; delay: number }) {
+function FeatureCard({ icon, title, description, delay, className, gradient }: { icon: React.ReactNode; title: string; description: string; delay: number; className?: string; gradient?: string }) {
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 30 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay } }
+        hidden: { opacity: 0, y: 30, scale: 0.95 },
+        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, delay, type: "spring" } }
       }}
-      whileHover={{ y: -10, boxShadow: "0 20px 40px -10px rgba(0,0,0,0.5)" }}
-      className="p-8 rounded-3xl bg-white/[0.03] border border-white/5 backdrop-blur-sm group hover:bg-white/[0.05] transition-all duration-300"
+      whileHover={{ y: -5, scale: 1.02 }}
+      className={`relative p-8 rounded-[2rem] bg-gradient-to-br from-white/10 to-white/5 border border-white/10 backdrop-blur-md shadow-xl overflow-hidden group ${className || ""}`}
     >
-      <div className="mb-6 p-4 rounded-2xl bg-white/5 w-fit group-hover:scale-110 transition-transform duration-300 ring-1 ring-white/10 group-hover:ring-blue-500/50">{icon}</div>
-      <h3 className="text-2xl font-bold mb-3 text-gray-100">{title}</h3>
-      <p className="text-gray-400 leading-relaxed">{description}</p>
+      {/* Glow Effect */}
+      <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${gradient || "from-blue-500/20 to-purple-500/20"} blur-[50px] rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
+
+      <div className="relative z-10">
+        <div className="mb-6 p-4 rounded-2xl bg-white/5 w-fit ring-1 ring-white/10 group-hover:bg-white/10 transition-colors duration-300 backdrop-blur-sm shadow-inner">
+          {icon}
+        </div>
+        <h3 className="text-2xl font-bold mb-3 text-white tracking-tight">{title}</h3>
+        <p className="text-gray-300 leading-relaxed font-light">{description}</p>
+      </div>
     </motion.div>
   );
 }

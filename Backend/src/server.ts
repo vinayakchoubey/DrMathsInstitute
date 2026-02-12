@@ -104,6 +104,7 @@ import messageRoutes from './routes/messageRoutes';
 import userRoutes from './routes/userRoutes';
 import ragRoutes from './routes/ragRoutes';
 import notificationRoutes from './routes/notificationRoutes';
+import mobileHeroRoutes from './routes/mobileHeroRoutes';
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -121,6 +122,7 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/rag', ragRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/mobile-hero', mobileHeroRoutes);
 
 // Trigger Restart v2
 app.get('/', (req: Request, res: Response) => {
@@ -140,4 +142,3 @@ if (process.env.VERCEL !== '1') {
 
 // Export for Vercel serverless functions
 export default app;
- 
