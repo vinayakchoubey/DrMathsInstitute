@@ -23,11 +23,16 @@ export default function VideoSection() {
 
     if (!videoData || !videoData.isActive) return null;
 
+    const getYouTubeId = (url: string) => {
+        if (!url) return null;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
+
     const getEmbedUrl = (url: string) => {
-        if (!url) return "";
-        // Simple regex to extract ID
-        const match = url.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([^#&?]*)/);
-        const id = match && match[1] ? match[1] : "";
+        const id = getYouTubeId(url);
+        if (!id) return "";
         // Autoplay requires mute=1 in most browsers for uninitiated playback
         return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&playlist=${id}&loop=1`;
     };
@@ -98,7 +103,7 @@ export default function VideoSection() {
                             <div className="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative group cursor-pointer" onClick={() => setIsPlaying(true)}>
                                 {/* Placeholder / Thumbnail - Using youtube thumbnail hack */}
                                 <img
-                                    src={`https://img.youtube.com/vi/${videoData.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([^#&?]*)/)?.[1] || ''}/maxresdefault.jpg`}
+                                    src={`https://img.youtube.com/vi/${getYouTubeId(videoData.videoUrl) || ''}/maxresdefault.jpg`}
                                     alt="Video Thumbnail"
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                     onError={(e) => { (e.target as HTMLImageElement).src = 'https://via.placeholder.com/640x360?text=Video+Thumbnail' }}

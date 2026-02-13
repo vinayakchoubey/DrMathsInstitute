@@ -117,21 +117,44 @@ export default function ManageVideoPage() {
                 <div className="bg-card border border-white/10 rounded-2xl p-8 shadow-2xl flex flex-col items-center justify-center text-center">
                     <h3 className="text-gray-400 text-sm font-medium mb-4 uppercase tracking-wider">Live Preview</h3>
                     <div className="w-full aspect-video bg-black/40 rounded-xl overflow-hidden border border-white/5 relative group">
-                        {videoData.videoUrl && videoData.videoUrl.includes("youtube.com") ? (
-                            <iframe
-                                className="w-full h-full"
-                                src={`https://www.youtube.com/embed/${videoData.videoUrl.split('v=')[1]?.split('&')[0]}`}
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                            ></iframe>
-                        ) : (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-500">
-                                <Play size={48} className="mb-2 opacity-50" />
-                                <p>Enter a valid YouTube URL to preview</p>
-                            </div>
-                        )}
+                        {(() => {
+                            if (!videoData.videoUrl) {
+                                return (
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-500">
+                                        <Play size={48} className="mb-2 opacity-50" />
+                                        <p>Enter a valid YouTube URL to preview</p>
+                                    </div>
+                                );
+                            }
+
+                            const getYouTubeId = (url: string) => {
+                                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
+                                const match = url.match(regExp);
+                                return (match && match[2].length === 11) ? match[2] : null;
+                            };
+
+                            const videoId = getYouTubeId(videoData.videoUrl);
+
+                            if (videoId) {
+                                return (
+                                    <iframe
+                                        className="w-full h-full"
+                                        src={`https://www.youtube.com/embed/${videoId}`}
+                                        title="YouTube video player"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    ></iframe>
+                                );
+                            }
+
+                            return (
+                                <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-500">
+                                    <Play size={48} className="mb-2 opacity-50" />
+                                    <p>Invalid YouTube URL</p>
+                                </div>
+                            );
+                        })()}
                     </div>
                 </div>
             </div>
