@@ -95,7 +95,7 @@ export default function OngoingCoursesCarousel() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="text-gray-400 max-w-2xl mx-auto text-lg"
+                        className="hidden md:block text-gray-400 max-w-2xl mx-auto text-lg"
                     >
                         Unlock your potential with our meticulously designed curriculum. Join thousands of successful students achieving their academic goals.
                     </motion.p>
@@ -114,11 +114,11 @@ export default function OngoingCoursesCarousel() {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
                             whileHover={{ y: -10 }}
-                            className="bg-slate-900/50 border border-white/10 rounded-3xl overflow-hidden min-w-[320px] md:min-w-[380px] snap-center group hover:bg-slate-900/80 transition-colors cursor-pointer relative"
+                            className="bg-slate-900/50 border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden min-w-[260px] md:min-w-[380px] snap-center group hover:bg-slate-900/80 transition-colors cursor-pointer relative"
                             onClick={() => handleCardClick(course._id)}
                         >
                             {/* Image Container */}
-                            <div className="h-56 relative overflow-hidden">
+                            <div className="h-40 md:h-56 relative overflow-hidden">
                                 <img
                                     src={course.thumbnail}
                                     alt={course.title}
@@ -126,38 +126,38 @@ export default function OngoingCoursesCarousel() {
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80" />
 
-                                <div className="absolute top-4 left-4">
-                                    <span className="bg-blue-600/90 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                                <div className="absolute top-3 left-3 md:top-4 md:left-4">
+                                    <span className="bg-blue-600/90 backdrop-blur-md text-white text-[10px] md:text-xs font-bold px-2 py-0.5 md:px-3 md:py-1 rounded-full uppercase tracking-wide">
                                         {course.category || "Featured"}
                                     </span>
                                 </div>
                             </div>
 
                             {/* Content */}
-                            <div className="p-6 relative">
-                                <h3 className="text-xl font-bold text-white mb-2 line-clamp-1 group-hover:text-blue-400 transition-colors">
+                            <div className="p-4 md:p-6 relative">
+                                <h3 className="text-lg md:text-xl font-bold text-white mb-1 md:mb-2 line-clamp-1 group-hover:text-blue-400 transition-colors">
                                     {course.title}
                                 </h3>
 
-                                <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
+                                <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400 mb-3 md:mb-4">
                                     <User size={14} className="text-blue-500" />
                                     <span>{course.teacherName}</span>
                                 </div>
 
-                                <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center justify-between mb-3 md:mb-4">
                                     <div className="flex flex-col">
-                                        <span className="text-xs text-gray-500">Starting From</span>
-                                        <span className="text-sm font-medium text-white flex items-center gap-1">
+                                        <span className="text-[10px] md:text-xs text-gray-500">Starting From</span>
+                                        <span className="text-xs md:text-sm font-medium text-white flex items-center gap-1">
                                             <Calendar size={12} /> {course.startDate ? new Date(course.startDate).toLocaleDateString() : "Flexible"}
                                         </span>
                                     </div>
                                     <div className="text-right">
                                         {course.originalPrice && (
-                                            <span className="block text-xs text-gray-500 line-through">
+                                            <span className="block text-[10px] md:text-xs text-gray-500 line-through">
                                                 ₹{course.originalPrice}
                                             </span>
                                         )}
-                                        <span className="text-lg font-bold text-green-400">
+                                        <span className="text-base md:text-lg font-bold text-green-400">
                                             ₹{course.price}
                                         </span>
                                     </div>
@@ -167,13 +167,13 @@ export default function OngoingCoursesCarousel() {
                                     <button
                                         onClick={(e) => handleAddToCart(e, course)}
                                         disabled={isInCart(course._id)}
-                                        className={`flex-1 ${isInCart(course._id) ? 'bg-green-600/20 text-green-400' : 'bg-white/5 hover:bg-white/10 text-gray-300'} border border-white/10 py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2`}
+                                        className={`flex-1 ${isInCart(course._id) ? 'bg-green-600/20 text-green-400' : 'bg-white/5 hover:bg-white/10 text-gray-300'} border border-white/10 py-2 md:py-3 rounded-lg md:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 text-sm md:text-base`}
                                     >
                                         <ShoppingCart size={16} /> {isInCart(course._id) ? "Added" : "Cart"}
                                     </button>
                                     <button
                                         onClick={() => handleCardClick(course._id)}
-                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white border border-transparent py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2"
+                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white border border-transparent py-2 md:py-3 rounded-lg md:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 text-sm md:text-base"
                                     >
                                         View <ArrowRight size={16} />
                                     </button>

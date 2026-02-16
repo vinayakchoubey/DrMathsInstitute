@@ -74,8 +74,16 @@ export default function AdminDashboard() {
                     <h3 className="text-xl font-bold mb-2">Manage Scholars</h3>
                     <p className="text-gray-400 text-sm">Highlight top performing students.</p>
                 </Link>
+
+                <Link href="/admin/testimonials" className="bg-card hover:bg-card/80 border border-white/10 p-8 rounded-2xl shadow-xl group transition-all hover:-translate-y-1">
+                    <div className="bg-pink-500/20 w-12 h-12 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <FileText size={24} className="text-pink-400" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Manage Testimonials</h3>
+                    <p className="text-gray-400 text-sm">Add, remove, or update student testimonials.</p>
+                </Link>
             </div>
-        </div>
+        </div >
     );
 }
 
