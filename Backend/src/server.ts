@@ -16,12 +16,13 @@ const app: Application = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware - CORS configuration (MUST BE FIRST)
-// Middleware - CORS configuration (MUST BE FIRST)
 const allowedOrigins = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'https://drmaths-frontend.vercel.app',
-    'https://dr-maths-institute-ohwp.vercel.app'
+    'https://dr-maths-institute-ohwp.vercel.app',
+    'https://www.drmathsinstitute.in',
+    'https://drmathsinstitute.in'
 ];
 
 const corsOptions: cors.CorsOptions = {
