@@ -138,28 +138,37 @@ export default function Scholar3DCarousel() {
                 </AnimatePresence>
             </div>
 
-            {/* Controls */}
-            <div className="absolute bottom-4 flex gap-4 z-50">
-                <button
-                    onClick={handlePrev}
-                    className="p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all border border-white/10"
-                >
-                    <ChevronLeft className="text-white" />
-                </button>
-                <div className="flex gap-2 items-center">
-                    {displayScholars.map((_, i) => (
-                        <div
-                            key={i}
-                            className={`w-2 h-2 rounded-full transition-all ${i === currentIndex ? 'w-6 bg-blue-500' : 'bg-white/30'}`}
-                        />
-                    ))}
-                </div>
-                <button
-                    onClick={handleNext}
-                    className="p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all border border-white/10"
-                >
-                    <ChevronRight className="text-white" />
-                </button>
+            {/* Left Arrow */}
+            <button
+                onClick={handlePrev}
+                className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-50 group"
+            >
+                <span className="absolute inset-0 rounded-full bg-blue-500/20 blur-md group-hover:bg-blue-500/40 transition-all duration-500 animate-pulse" />
+                <span className="relative flex items-center justify-center w-12 h-12 md:w-11 md:h-11 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 group-hover:border-blue-400/50 group-hover:bg-white/20 transition-all duration-300 group-active:scale-90 shadow-xl shadow-black/20">
+                    <ChevronLeft className="text-white w-6 h-6 group-hover:-translate-x-0.5 transition-transform duration-300" />
+                </span>
+            </button>
+
+            {/* Right Arrow */}
+            <button
+                onClick={handleNext}
+                className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-50 group"
+            >
+                <span className="absolute inset-0 rounded-full bg-blue-500/20 blur-md group-hover:bg-blue-500/40 transition-all duration-500 animate-pulse" />
+                <span className="relative flex items-center justify-center w-12 h-12 md:w-11 md:h-11 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 group-hover:border-blue-400/50 group-hover:bg-white/20 transition-all duration-300 group-active:scale-90 shadow-xl shadow-black/20">
+                    <ChevronRight className="text-white w-6 h-6 group-hover:translate-x-0.5 transition-transform duration-300" />
+                </span>
+            </button>
+
+            {/* Dot Indicators */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 items-center z-50">
+                {displayScholars.map((_, i) => (
+                    <button
+                        key={i}
+                        onClick={() => { setCurrentIndex(i); setIsAutoPlaying(false); }}
+                        className={`rounded-full transition-all duration-500 ${i === currentIndex ? 'w-7 h-2.5 bg-gradient-to-r from-blue-400 to-purple-500 shadow-md shadow-blue-500/30' : 'w-2.5 h-2.5 bg-white/25 hover:bg-white/50'}`}
+                    />
+                ))}
             </div>
 
             {/* Background Glow Effect - Sphere Suggestion */}

@@ -156,51 +156,50 @@ export default function CoursesPage() {
 
                             return (
                                 <Link href={`/courses/${course._id}`} key={course._id} className="block group">
-                                    <div className="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col border border-gray-200">
+                                    <div className="bg-card border border-white/10 rounded-2xl overflow-hidden hover:border-blue-500/30 transition-all duration-300 h-full flex flex-col group">
                                         {/* Thumbnail Area */}
-                                        <div className="relative h-40 bg-gray-100 p-4 flex items-center justify-center overflow-hidden">
-                                            <div className="absolute top-0 left-0 w-full h-full">
-                                                <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                            </div>
-                                            <div className={`absolute top-3 left-3 px-2.5 py-1 rounded text-xs font-bold uppercase backdrop-blur-md border ${typeLabelColor.replace('bg-', 'bg-black/60 ')} text-white`}>
+                                        <div className="relative h-40 overflow-hidden">
+                                            <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-80" />
+                                            <div className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold uppercase backdrop-blur-md border ${typeLabelColor}`}>
                                                 {course.type || 'Online'}
                                             </div>
                                         </div>
 
                                         {/* Content */}
-                                        <div className="p-4 flex-1 flex flex-col bg-white">
+                                        <div className="p-4 flex-1 flex flex-col">
                                             {/* Tags */}
                                             <div className="flex justify-between items-start mb-2">
-                                                <span className="text-primary font-semibold text-xs uppercase tracking-wide">
+                                                <span className="text-blue-400 font-semibold text-xs uppercase tracking-wide">
                                                     {course.category || "General"}
                                                 </span>
                                                 {course.language && (
-                                                    <span className="border border-gray-200 text-gray-600 text-[10px] px-1.5 py-0.5 rounded uppercase font-bold">
+                                                    <span className="border border-white/10 text-gray-400 text-[10px] px-1.5 py-0.5 rounded uppercase font-bold">
                                                         {course.language}
                                                     </span>
                                                 )}
                                             </div>
 
                                             {/* Title */}
-                                            <h3 className="text-gray-900 font-bold text-lg leading-tight mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                                            <h3 className="text-white font-bold text-lg leading-tight mb-3 line-clamp-2 group-hover:text-blue-400 transition-colors">
                                                 {course.title}
                                             </h3>
 
                                             {/* Meta Info */}
                                             <div className="space-y-2 mb-4">
                                                 {course.examTarget && (
-                                                    <div className="flex items-center gap-2 text-gray-600 text-sm">
+                                                    <div className="flex items-center gap-2 text-gray-400 text-sm">
                                                         <BookOpen size={16} />
                                                         <span>{course.examTarget}</span>
                                                     </div>
                                                 )}
-                                                <div className="flex items-center gap-2 text-gray-600 text-sm">
+                                                <div className="flex items-center gap-2 text-gray-400 text-sm">
                                                     <Calendar size={16} />
                                                     <div className="flex items-center gap-2">
                                                         {isLive ? (
                                                             <>
                                                                 <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                                                                <span className="font-medium text-gray-900">Started</span>
+                                                                <span className="font-medium text-white">Started</span>
                                                             </>
                                                         ) : (
                                                             <span>Starts {formatDate(course.startDate)}</span>
@@ -210,16 +209,16 @@ export default function CoursesPage() {
                                             </div>
 
                                             {/* Footer: Price & Action */}
-                                            <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between gap-2">
+                                            <div className="mt-auto pt-4 border-t border-white/10 flex items-center justify-between gap-2">
                                                 <div>
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-gray-900 font-bold text-lg">₹{course.price.toLocaleString()}</span>
+                                                        <span className="text-white font-bold text-lg">₹{course.price.toLocaleString()}</span>
                                                         {course.originalPrice && course.originalPrice > course.price && (
-                                                            <span className="text-gray-400 text-sm line-through">₹{course.originalPrice.toLocaleString()}</span>
+                                                            <span className="text-gray-500 text-sm line-through">₹{course.originalPrice.toLocaleString()}</span>
                                                         )}
                                                     </div>
                                                     {discount > 0 && (
-                                                        <div className="text-green-600 text-xs font-bold">{discount}% OFF</div>
+                                                        <div className="text-green-500 text-xs font-bold">{discount}% OFF</div>
                                                     )}
                                                 </div>
                                                 <div className="flex gap-2">
@@ -228,7 +227,7 @@ export default function CoursesPage() {
                                                             e.preventDefault();
                                                             setSelectedCourse(course);
                                                         }}
-                                                        className="bg-gray-100 hover:bg-gray-200 text-gray-700 p-2.5 rounded-xl transition-colors"
+                                                        className="bg-white/5 hover:bg-white/10 text-white p-2.5 rounded-xl transition-colors"
                                                         title="View Details"
                                                     >
                                                         <Info size={20} />
@@ -245,7 +244,7 @@ export default function CoursesPage() {
                                                             });
                                                             alert("Added to cart!");
                                                         }}
-                                                        className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-lg hover:shadow-black/20 hover:scale-105 active:scale-95"
+                                                        className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-4 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-blue-600/20 hover:scale-105 active:scale-95 duration-200"
                                                     >
                                                         <ShoppingCart size={18} />
                                                         Add
@@ -273,79 +272,81 @@ export default function CoursesPage() {
             {/* Course Details Modal */}
             {selectedCourse && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedCourse(null)}>
-                    <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative animate-in fade-in zoom-in duration-300" onClick={e => e.stopPropagation()}>
+                    <div className="bg-[#0f0f12] border border-white/10 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative animate-in fade-in zoom-in duration-300" onClick={e => e.stopPropagation()}>
 
                         {/* Modal Header */}
                         <div className="relative h-56 sm:h-64">
                             <img src={selectedCourse.thumbnail} alt={selectedCourse.title} className="w-full h-full object-cover" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f12] to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent" />
                             <button
                                 onClick={() => setSelectedCourse(null)}
                                 className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors backdrop-blur-md"
                             >
                                 <X size={20} />
                             </button>
-                            <div className="absolute bottom-4 left-4 right-4">
-                                <div className="flex gap-2 mb-2">
-                                    <span className="bg-blue-600/90 text-white text-xs font-bold px-2 py-1 rounded uppercase backdrop-blur-md">
-                                        {selectedCourse.category || 'Course'}
-                                    </span>
-                                    <span className="bg-white/20 text-white text-xs font-bold px-2 py-1 rounded uppercase backdrop-blur-md border border-white/30">
-                                        {selectedCourse.type || 'Online'}
-                                    </span>
-                                </div>
-                                <h2 className="text-3xl font-black text-white leading-tight">{selectedCourse.title}</h2>
-                            </div>
                         </div>
 
-                        <div className="p-6 sm:p-8 relative z-10">
-
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4 pb-6 border-b border-gray-100">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xl uppercase">
-                                        {selectedCourse.teacherName.charAt(0)}
+                        <div className="p-6 sm:p-8 -mt-16 relative z-10">
+                            <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-6 gap-4">
+                                <div>
+                                    <div className="flex gap-2 mb-3">
+                                        <span className="inline-block px-3 py-1 text-xs font-bold tracking-wider text-blue-400 uppercase bg-blue-500/10 rounded-full border border-blue-500/20 backdrop-blur-md">
+                                            {selectedCourse.category || 'Course'}
+                                        </span>
+                                        <span className="inline-block px-3 py-1 text-xs font-bold tracking-wider text-purple-400 uppercase bg-purple-500/10 rounded-full border border-purple-500/20 backdrop-blur-md">
+                                            {selectedCourse.type || 'Online'}
+                                        </span>
                                     </div>
-                                    <div>
-                                        <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">Instructor</div>
-                                        <div className="font-bold text-gray-900 text-lg">{selectedCourse.teacherName}</div>
-                                    </div>
+                                    <h2 className="text-3xl font-black text-white leading-tight">{selectedCourse.title}</h2>
                                 </div>
-                                <div className="text-right">
-                                    <div className="text-3xl font-bold text-gray-900">₹{selectedCourse.price.toLocaleString()}</div>
+                                <div className="sm:text-right">
+                                    <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">₹{selectedCourse.price.toLocaleString()}</div>
                                     {selectedCourse.originalPrice && selectedCourse.originalPrice > selectedCourse.price && (
-                                        <div className="text-gray-400 text-sm line-through">₹{selectedCourse.originalPrice.toLocaleString()}</div>
+                                        <div className="text-gray-500 text-sm line-through">₹{selectedCourse.originalPrice.toLocaleString()}</div>
                                     )}
                                 </div>
                             </div>
 
                             <div className="space-y-8">
+                                {/* Instructor */}
+                                <div className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/30 transition-colors">
+                                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl uppercase shadow-lg">
+                                        {selectedCourse.teacherName.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <div className="text-xs text-blue-400 font-bold uppercase tracking-wider mb-0.5">Instructor</div>
+                                        <div className="font-bold text-white text-lg">{selectedCourse.teacherName}</div>
+                                    </div>
+                                </div>
+
                                 {/* Details Grid */}
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
-                                        <div className="flex items-center gap-2 text-gray-500 text-xs font-bold uppercase mb-1">
+                                    <div className="bg-white/5 p-3 rounded-xl border border-white/10">
+                                        <div className="flex items-center gap-2 text-gray-400 text-xs font-bold uppercase mb-1">
                                             <Calendar size={14} /> Start Date
                                         </div>
-                                        <div className="font-semibold text-gray-900">
+                                        <div className="font-semibold text-white">
                                             {selectedCourse.startDate ? new Date(selectedCourse.startDate).toLocaleDateString() : 'TBA'}
                                         </div>
                                     </div>
-                                    <div className="bg-gray-50 p-3 rounded-xl border border-gray-100">
-                                        <div className="flex items-center gap-2 text-gray-500 text-xs font-bold uppercase mb-1">
+                                    <div className="bg-white/5 p-3 rounded-xl border border-white/10">
+                                        <div className="flex items-center gap-2 text-gray-400 text-xs font-bold uppercase mb-1">
                                             <BookOpen size={14} /> Target Exam
                                         </div>
-                                        <div className="font-semibold text-gray-900">{selectedCourse.examTarget || 'General'}</div>
+                                        <div className="font-semibold text-white">{selectedCourse.examTarget || 'General'}</div>
                                     </div>
                                 </div>
 
                                 {/* Description */}
                                 <div>
-                                    <h3 className="text-lg font-bold text-gray-900 mb-2">About this Course</h3>
-                                    <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{selectedCourse.description}</p>
+                                    <h3 className="text-lg font-bold text-white mb-3">About this Course</h3>
+                                    <p className="text-gray-300 leading-relaxed text-sm sm:text-base">{selectedCourse.description}</p>
                                 </div>
 
                                 {/* Highlights */}
                                 <div>
-                                    <h3 className="text-lg font-bold text-gray-900 mb-4">What you'll learn</h3>
+                                    <h3 className="text-lg font-bold text-white mb-4">What you'll learn</h3>
                                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                         {(selectedCourse.highlights && selectedCourse.highlights.length > 0 ? selectedCourse.highlights : [
                                             "In-depth concept clarity",
@@ -354,9 +355,9 @@ export default function CoursesPage() {
                                             "Exclusive doubt sessions",
                                             "Revision notes and mind maps"
                                         ]).map((highlight, idx) => (
-                                            <li key={idx} className="flex items-start gap-3 text-gray-600 text-sm">
-                                                <div className="mt-1 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center shrink-0">
-                                                    <Check className="w-3 h-3 text-green-600" />
+                                            <li key={idx} className="flex items-start gap-3 text-gray-300 text-sm">
+                                                <div className="mt-1 w-5 h-5 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
+                                                    <Check className="w-3 h-3 text-green-500" />
                                                 </div>
                                                 <span>{highlight}</span>
                                             </li>
@@ -365,10 +366,10 @@ export default function CoursesPage() {
                                 </div>
                             </div>
 
-                            <div className="mt-10 pt-6 border-t border-gray-100 flex justify-end gap-3 sticky bottom-0 bg-white/95 backdrop-blur py-4 -mb-4">
+                            <div className="mt-10 pt-6 border-t border-white/10 flex justify-end gap-4 sticky bottom-0 bg-[#0f0f12]/95 backdrop-blur py-4 -mb-4">
                                 <button
                                     onClick={() => setSelectedCourse(null)}
-                                    className="px-6 py-3 rounded-xl font-bold text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+                                    className="px-6 py-3 rounded-xl font-bold text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
                                 >
                                     Close
                                 </button>
@@ -384,7 +385,7 @@ export default function CoursesPage() {
                                         alert("Added to cart!");
                                         setSelectedCourse(null);
                                     }}
-                                    className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-xl hover:shadow-black/20 hover:scale-105 active:scale-95"
+                                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2 transition-all shadow-xl shadow-blue-600/20 hover:shadow-blue-600/40 hover:scale-105 active:scale-95 duration-200"
                                 >
                                     <ShoppingCart size={20} />
                                     Add to Cart

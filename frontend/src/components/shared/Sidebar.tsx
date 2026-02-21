@@ -157,10 +157,31 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                 {/* Toggle Button */}
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className="absolute -right-3 top-6 bg-primary text-white p-1 rounded-full shadow-lg border border-white/10 hover:bg-primary/90 transition-colors z-50 ring-4 ring-background"
+                    className="absolute -right-4 md:-right-3 top-6 group z-50"
                 >
-                    {isOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+                    <span className="absolute inset-0 rounded-full bg-blue-500/30 blur-md animate-pulse" />
+                    <span className="relative flex items-center justify-center p-2.5 md:p-1.5 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-xl shadow-blue-600/30 border border-white/20 hover:from-blue-500 hover:to-purple-500 hover:shadow-blue-500/50 transition-all duration-300 active:scale-90 ring-4 ring-background">
+                        {/* Shimmer / Reflecting Light — bleeds outside circle */}
+                        <span className="absolute -inset-3 overflow-hidden rounded-full pointer-events-none">
+                            <span
+                                className="absolute top-0 -left-full w-full h-full"
+                                style={{
+                                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)',
+                                    animation: 'sidebarShimmer 3s ease-in-out infinite',
+                                    filter: 'blur(3px)',
+                                }}
+                            />
+                        </span>
+                        {isOpen ? <ChevronLeft size={18} className="md:w-3.5 md:h-3.5 relative z-10" /> : <ChevronRight size={18} className="md:w-3.5 md:h-3.5 relative z-10" />}
+                    </span>
                 </button>
+                <style jsx>{`
+                    @keyframes sidebarShimmer {
+                        0% { left: -100%; }
+                        50% { left: 100%; }
+                        100% { left: 100%; }
+                    }
+                `}</style>
             </aside>
 
             {/* Overlay for mobile */}

@@ -131,19 +131,31 @@ export default function MobileFeatureCarousel() {
                 </AnimatePresence>
             </div>
 
-            {/* Controls */}
-            <div className="absolute bottom-2 flex gap-6 z-50">
-                <button onClick={handlePrev} className="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
-                    <ChevronLeft />
-                </button>
-                <div className="flex gap-2 items-center">
-                    {features.map((_, i) => (
-                        <div key={i} className={`w-2 h-2 rounded-full transition-all ${i === currentIndex ? 'w-6 bg-white' : 'bg-white/20'}`} />
-                    ))}
-                </div>
-                <button onClick={handleNext} className="p-2 rounded-full hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
-                    <ChevronRight />
-                </button>
+            {/* Left Arrow */}
+            <button onClick={handlePrev} className="absolute left-2 top-1/2 -translate-y-1/2 z-50 group">
+                <span className="absolute inset-0 rounded-full bg-blue-500/20 blur-md group-hover:bg-blue-500/40 transition-all duration-500 animate-pulse" />
+                <span className="relative flex items-center justify-center w-11 h-11 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 group-hover:border-blue-400/50 group-hover:bg-white/20 transition-all duration-300 group-active:scale-90 shadow-xl shadow-black/20">
+                    <ChevronLeft className="text-white w-5 h-5 group-hover:-translate-x-0.5 transition-transform duration-300" />
+                </span>
+            </button>
+
+            {/* Right Arrow */}
+            <button onClick={handleNext} className="absolute right-2 top-1/2 -translate-y-1/2 z-50 group">
+                <span className="absolute inset-0 rounded-full bg-blue-500/20 blur-md group-hover:bg-blue-500/40 transition-all duration-500 animate-pulse" />
+                <span className="relative flex items-center justify-center w-11 h-11 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 group-hover:border-blue-400/50 group-hover:bg-white/20 transition-all duration-300 group-active:scale-90 shadow-xl shadow-black/20">
+                    <ChevronRight className="text-white w-5 h-5 group-hover:translate-x-0.5 transition-transform duration-300" />
+                </span>
+            </button>
+
+            {/* Dot Indicators */}
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 items-center z-50">
+                {features.map((_, i) => (
+                    <button
+                        key={i}
+                        onClick={() => { setCurrentIndex(i); setIsAutoPlaying(false); }}
+                        className={`rounded-full transition-all duration-500 ${i === currentIndex ? 'w-7 h-2.5 bg-gradient-to-r from-blue-400 to-purple-500 shadow-md shadow-blue-500/30' : 'w-2.5 h-2.5 bg-white/25 hover:bg-white/50'}`}
+                    />
+                ))}
             </div>
         </div>
     );
