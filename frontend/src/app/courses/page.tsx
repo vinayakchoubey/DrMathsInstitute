@@ -72,25 +72,28 @@ export default function CoursesPage() {
     });
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             {/* Header & Search */}
             {/* Header Area */}
-            <div className="relative mb-12 py-10 flex flex-col items-center text-center">
+            <div className="relative mb-6 py-6 flex flex-col items-center text-center">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-500/10 to-transparent rounded-3xl -z-10 blur-xl"></div>
 
-                <div className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-wider text-blue-400 uppercase bg-blue-500/10 rounded-full border border-blue-500/20">
+                <div className="inline-block px-3 py-1 mb-3 text-[10px] font-bold tracking-wider text-blue-400 uppercase bg-blue-500/10 rounded-full border border-blue-500/20">
                     Academic Excellence
                 </div>
 
-                <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight mb-4">
+                <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-3">
                     All <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Courses</span>
                 </h1>
 
-                <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed mb-8">
+                <p className="text-gray-400 text-base max-w-2xl mx-auto leading-relaxed">
                     Discover comprehensive study materials and live classes designed to help you master mathematics.
                 </p>
+            </div>
 
-                <div className="w-full max-w-md mx-auto relative z-10">
+            {/* Search + Filters — same line on desktop */}
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-6 md:justify-between">
+                <div className="w-full md:w-auto md:flex-1 max-w-md relative z-10 md:order-2">
                     <div className="relative group w-full">
                         <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
                         <div className="relative bg-black rounded-xl p-1 flex items-center border border-white/10">
@@ -100,39 +103,38 @@ export default function CoursesPage() {
                                 placeholder="Search for a topic..."
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
-                                className="w-full bg-transparent text-white placeholder-gray-500 border-none focus:ring-0 py-2.5 px-3 outline-none"
+                                className="w-full bg-transparent text-white placeholder-gray-500 border-none focus:ring-0 py-2 px-3 outline-none text-sm"
                             />
                         </div>
                     </div>
                 </div>
-            </div>
 
-            {/* Filters */}
-            <div className="flex gap-3 overflow-x-auto pb-2 mb-12 scrollbar-hide justify-center">
-                <button
-                    onClick={() => setFilterType("all")}
-                    className={`px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 border ${filterType === 'all' ? 'bg-white text-black border-white shadow-lg shadow-white/10' : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'}`}
-                >
-                    All Types
-                </button>
-                <button
-                    onClick={() => setFilterType("online")}
-                    className={`px-6 py-2 rounded-full text-sm font-medium transition-all border ${filterType === 'online' ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'}`}
-                >
-                    Online
-                </button>
-                <button
-                    onClick={() => setFilterType("hybrid")}
-                    className={`px-6 py-2 rounded-full text-sm font-medium transition-all border ${filterType === 'hybrid' ? 'bg-purple-600 text-white border-purple-600 shadow-lg shadow-purple-500/20' : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'}`}
-                >
-                    Hybrid
-                </button>
-                <button
-                    onClick={() => setFilterType("offline")}
-                    className={`px-6 py-2 rounded-full text-sm font-medium transition-all border ${filterType === 'offline' ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20' : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'}`}
-                >
-                    Offline
-                </button>
+                <div className="flex gap-2 overflow-x-auto scrollbar-hide flex-shrink-0 md:order-1">
+                    <button
+                        onClick={() => setFilterType("all")}
+                        className={`px-5 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 border whitespace-nowrap ${filterType === 'all' ? 'bg-white text-black border-white shadow-lg shadow-white/10' : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'}`}
+                    >
+                        All Types
+                    </button>
+                    <button
+                        onClick={() => setFilterType("online")}
+                        className={`px-5 py-2 rounded-full text-sm font-medium transition-all border whitespace-nowrap ${filterType === 'online' ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'}`}
+                    >
+                        Online
+                    </button>
+                    <button
+                        onClick={() => setFilterType("hybrid")}
+                        className={`px-5 py-2 rounded-full text-sm font-medium transition-all border whitespace-nowrap ${filterType === 'hybrid' ? 'bg-purple-600 text-white border-purple-600 shadow-lg shadow-purple-500/20' : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'}`}
+                    >
+                        Hybrid
+                    </button>
+                    <button
+                        onClick={() => setFilterType("offline")}
+                        className={`px-5 py-2 rounded-full text-sm font-medium transition-all border whitespace-nowrap ${filterType === 'offline' ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20' : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10 hover:text-white'}`}
+                    >
+                        Offline
+                    </button>
+                </div>
             </div>
 
 
@@ -142,7 +144,7 @@ export default function CoursesPage() {
                         <Loader2 className="w-10 h-10 animate-spin text-primary" />
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         {filteredCourses.map((course) => {
                             const discount = calculateDiscount(course.price, course.originalPrice);
                             const isLive = new Date(course.startDate || "") <= new Date();
@@ -156,7 +158,7 @@ export default function CoursesPage() {
                                 <Link href={`/courses/${course._id}`} key={course._id} className="block group">
                                     <div className="bg-white rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col border border-gray-200">
                                         {/* Thumbnail Area */}
-                                        <div className="relative h-48 bg-gray-100 p-4 flex items-center justify-center overflow-hidden">
+                                        <div className="relative h-40 bg-gray-100 p-4 flex items-center justify-center overflow-hidden">
                                             <div className="absolute top-0 left-0 w-full h-full">
                                                 <img src={course.thumbnail} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                             </div>
@@ -166,7 +168,7 @@ export default function CoursesPage() {
                                         </div>
 
                                         {/* Content */}
-                                        <div className="p-5 flex-1 flex flex-col bg-white">
+                                        <div className="p-4 flex-1 flex flex-col bg-white">
                                             {/* Tags */}
                                             <div className="flex justify-between items-start mb-2">
                                                 <span className="text-primary font-semibold text-xs uppercase tracking-wide">

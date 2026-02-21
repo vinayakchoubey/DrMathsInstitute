@@ -46,12 +46,12 @@ export default function Scholar3DCarousel() {
     // Use a minimum of 3 items for the effect to work well. If less, duplicate.
     const displayScholars = scholars.length < 3 ? [...scholars, ...scholars, ...scholars].slice(0, 3) : scholars;
 
+    // Detect mobile for responsive offsets
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const sideOffset = isMobile ? 200 : 300;
+
     const getSlideStyles = (index: number) => {
         const diff = (index - currentIndex + displayScholars.length) % displayScholars.length;
-
-        // This logic simulates a 3D carousel by adjusting scale, z-index, opacity and x-position
-        // based on distance from current index.
-        // Assuming we show 3 items primarily: Center, Left, Right.
 
         let position = 'hidden';
         let x = 0;
@@ -72,21 +72,20 @@ export default function Scholar3DCarousel() {
             scale = 0.85;
             zIndex = 10;
             opacity = 0.6;
-            x = -300; // Move left
+            x = -sideOffset;
             rotateY = -25;
         } else if (index === (currentIndex + 1) % displayScholars.length) {
             position = 'right';
             scale = 0.85;
             zIndex = 10;
             opacity = 0.6;
-            x = 300; // Move right
+            x = sideOffset;
             rotateY = 25;
         } else {
-            // Items completely in back
             position = 'back';
             scale = 0.7;
             zIndex = 0;
-            opacity = 0; // Hide others to prevent clutter or keep low opacity
+            opacity = 0;
         }
 
         return { x, scale, zIndex, opacity, rotateY };
@@ -103,8 +102,8 @@ export default function Scholar3DCarousel() {
     };
 
     return (
-        <div className="relative h-[500px] w-full flex items-center justify-center overflow-hidden perspective-1000">
-            <div className="relative w-[350px] h-[450px] flex items-center justify-center perspective-1000">
+        <div className="relative h-[400px] md:h-[420px] w-full flex items-center justify-center overflow-hidden perspective-1000">
+            <div className="relative w-[260px] h-[330px] md:w-[350px] md:h-[450px] flex items-center justify-center perspective-1000">
                 <AnimatePresence>
                     {displayScholars.map((scholar, index) => {
                         const styles = getSlideStyles(index);
@@ -129,9 +128,9 @@ export default function Scholar3DCarousel() {
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
-                                <div className="p-6 relative z-20 -mt-12 bg-gradient-to-b from-transparent to-slate-900/90 h-[30%] flex flex-col justify-end">
-                                    <h3 className="text-2xl font-bold text-white text-center mb-1">{scholar.name}</h3>
-                                    <p className="text-blue-400 text-sm text-center line-clamp-2">{scholar.description}</p>
+                                <div className="p-3 md:p-6 relative z-20 -mt-10 md:-mt-12 bg-gradient-to-b from-transparent to-slate-900/90 h-[30%] flex flex-col justify-end">
+                                    <h3 className="text-lg md:text-2xl font-bold text-white text-center mb-0.5 md:mb-1">{scholar.name}</h3>
+                                    <p className="text-blue-400 text-xs md:text-sm text-center line-clamp-2">{scholar.description}</p>
                                 </div>
                             </motion.div>
                         );

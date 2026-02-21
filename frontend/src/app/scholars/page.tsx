@@ -12,7 +12,7 @@ export default function ScholarsPage() {
                             Our Top Scholars
                         </span>
                     </h1>
-                    <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                    <p className="hidden md:block text-xl text-gray-400 max-w-2xl mx-auto">
                         Meet the brilliant minds who have achieved excellence with Dr Maths Institute.
                     </p>
                 </div>

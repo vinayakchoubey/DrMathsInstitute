@@ -66,13 +66,13 @@ export default function OngoingCoursesCarousel() {
     if (courses.length === 0) return null;
 
     return (
-        <section className="py-24 relative overflow-hidden">
+        <section className="py-24 md:py-14 relative overflow-hidden">
             {/* Dynamic Background Elements */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-16">
+                <div className="text-center mb-16 md:mb-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -86,7 +86,7 @@ export default function OngoingCoursesCarousel() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500"
+                        className="text-4xl md:text-4xl font-bold mb-6 md:mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500"
                     >
                         Master Mathematics with Expert-Led Courses
                     </motion.h2>
@@ -95,7 +95,7 @@ export default function OngoingCoursesCarousel() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="hidden md:block text-gray-400 max-w-2xl mx-auto text-lg"
+                        className="hidden md:block text-gray-400 max-w-2xl mx-auto text-base"
                     >
                         Unlock your potential with our meticulously designed curriculum. Join thousands of successful students achieving their academic goals.
                     </motion.p>
@@ -103,7 +103,7 @@ export default function OngoingCoursesCarousel() {
 
                 {/* Horizontal Scroll / Slide Show */}
                 <div
-                    className="flex overflow-x-auto gap-8 pb-12 pt-4 px-4 snap-x snap-mandatory scrollbar-hide"
+                    className="flex overflow-x-auto gap-8 md:gap-6 pb-12 md:pb-6 pt-4 md:pt-2 px-4 snap-x snap-mandatory scrollbar-hide"
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
                     {courses.map((course, index) => (
@@ -114,11 +114,11 @@ export default function OngoingCoursesCarousel() {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
                             whileHover={{ y: -10 }}
-                            className="bg-slate-900/50 border border-white/10 rounded-2xl md:rounded-3xl overflow-hidden min-w-[260px] md:min-w-[380px] snap-center group hover:bg-slate-900/80 transition-colors cursor-pointer relative"
+                            className="bg-slate-900/50 border border-white/10 rounded-2xl md:rounded-2xl overflow-hidden min-w-[260px] md:min-w-[320px] snap-center group hover:bg-slate-900/80 transition-colors cursor-pointer relative"
                             onClick={() => handleCardClick(course._id)}
                         >
                             {/* Image Container */}
-                            <div className="h-40 md:h-56 relative overflow-hidden">
+                            <div className="h-40 md:h-40 relative overflow-hidden">
                                 <img
                                     src={course.thumbnail}
                                     alt={course.title}
@@ -134,17 +134,17 @@ export default function OngoingCoursesCarousel() {
                             </div>
 
                             {/* Content */}
-                            <div className="p-4 md:p-6 relative">
-                                <h3 className="text-lg md:text-xl font-bold text-white mb-1 md:mb-2 line-clamp-1 group-hover:text-blue-400 transition-colors">
+                            <div className="p-4 relative">
+                                <h3 className="text-lg md:text-base font-bold text-white mb-1 line-clamp-1 group-hover:text-blue-400 transition-colors">
                                     {course.title}
                                 </h3>
 
-                                <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400 mb-3 md:mb-4">
+                                <div className="flex items-center gap-2 text-xs text-gray-400 mb-3">
                                     <User size={14} className="text-blue-500" />
                                     <span>{course.teacherName}</span>
                                 </div>
 
-                                <div className="flex items-center justify-between mb-3 md:mb-4">
+                                <div className="flex items-center justify-between mb-3">
                                     <div className="flex flex-col">
                                         <span className="text-[10px] md:text-xs text-gray-500">Starting From</span>
                                         <span className="text-xs md:text-sm font-medium text-white flex items-center gap-1">
@@ -157,7 +157,7 @@ export default function OngoingCoursesCarousel() {
                                                 ₹{course.originalPrice}
                                             </span>
                                         )}
-                                        <span className="text-base md:text-lg font-bold text-green-400">
+                                        <span className="text-base font-bold text-green-400">
                                             ₹{course.price}
                                         </span>
                                     </div>
@@ -167,13 +167,13 @@ export default function OngoingCoursesCarousel() {
                                     <button
                                         onClick={(e) => handleAddToCart(e, course)}
                                         disabled={isInCart(course._id)}
-                                        className={`flex-1 ${isInCart(course._id) ? 'bg-green-600/20 text-green-400' : 'bg-white/5 hover:bg-white/10 text-gray-300'} border border-white/10 py-2 md:py-3 rounded-lg md:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 text-sm md:text-base`}
+                                        className={`flex-1 ${isInCart(course._id) ? 'bg-green-600/20 text-green-400' : 'bg-white/5 hover:bg-white/10 text-gray-300'} border border-white/10 py-2 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm`}
                                     >
                                         <ShoppingCart size={16} /> {isInCart(course._id) ? "Added" : "Cart"}
                                     </button>
                                     <button
                                         onClick={() => handleCardClick(course._id)}
-                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white border border-transparent py-2 md:py-3 rounded-lg md:rounded-xl font-semibold transition-all flex items-center justify-center gap-2 text-sm md:text-base"
+                                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white border border-transparent py-2 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm"
                                     >
                                         View <ArrowRight size={16} />
                                     </button>

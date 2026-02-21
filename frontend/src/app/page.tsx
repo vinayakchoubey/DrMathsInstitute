@@ -165,7 +165,7 @@ export default function Home() {
       < OngoingCoursesCarousel />
 
       {/* Top Scholars Section - 3D Sphere/Carousel */}
-      <section className="w-full py-32 relative overflow-visible" >
+      <section className="w-full pt-20 pb-32 md:pt-12 md:pb-16 relative overflow-visible" >
         {/* Background Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none" />
 
@@ -175,10 +175,18 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
-            className="text-center mb-16"
+            className="text-center mb-10 md:mb-8"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">Hall of Fame</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">Meet the brilliant minds who have achieved excellence with Dr Maths Institute.</p>
+            {/* Decorative accent line */}
+            <div className="flex justify-center mb-3">
+              <div className="w-10 h-1 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
+            </div>
+            {/* Badge */}
+            <span className="inline-block px-3 py-1 mb-3 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-[10px] md:text-xs font-semibold tracking-widest uppercase">
+              ✨ Top Achievers
+            </span>
+            <h2 className="text-3xl md:text-4xl font-extrabold mb-2 md:mb-3 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-500 drop-shadow-lg">Hall of Fame</h2>
+            <p className="hidden md:block text-gray-400 max-w-2xl mx-auto text-base">Meet the brilliant minds who have achieved excellence with Dr Maths Institute.</p>
           </motion.div>
 
           <div className="w-full flex justify-center">

@@ -38,23 +38,24 @@ export default function VideoSection() {
     };
 
     return (
-        <section className="py-20 bg-gradient-to-r from-gray-900 to-black relative overflow-hidden">
+        <section className="py-12 md:py-20 bg-gradient-to-r from-gray-900 to-black relative overflow-hidden">
             {/* Background Animations */}
             <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
                 <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-                    className="absolute -top-20 -left-20 w-96 h-96 bg-blue-500 rounded-full blur-[100px]"
+                    className="absolute -top-20 -left-20 w-72 md:w-96 h-72 md:h-96 bg-blue-500 rounded-full blur-[100px]"
                 />
                 <motion.div
                     animate={{ rotate: -360 }}
                     transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-                    className="absolute -bottom-20 -right-20 w-96 h-96 bg-purple-500 rounded-full blur-[100px]"
+                    className="absolute -bottom-20 -right-20 w-72 md:w-96 h-72 md:h-96 bg-purple-500 rounded-full blur-[100px]"
                 />
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                {/* Stacked on mobile, side-by-side on desktop */}
+                <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-12 items-center">
 
                     {/* Text Section */}
                     <motion.div
@@ -62,11 +63,20 @@ export default function VideoSection() {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
+                        className="text-center md:text-left"
                     >
-                        <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
+                        {/* Decorative accent line — mobile only */}
+                        <div className="flex justify-center md:hidden mb-3">
+                            <div className="w-10 h-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500" />
+                        </div>
+                        {/* Badge — mobile only */}
+                        <span className="inline-block md:hidden px-3 py-1 mb-3 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-[10px] font-semibold tracking-widest uppercase">
+                            🎬 Featured Video
+                        </span>
+                        <h2 className="text-2xl md:text-5xl font-extrabold text-white mb-3 md:mb-6 leading-tight">
                             {videoData.title}
                         </h2>
-                        <p className="text-lg text-gray-300 mb-8">
+                        <p className="hidden md:block text-lg text-gray-300 mb-8">
                             {videoData.description}
                         </p>
                         <motion.a
@@ -75,9 +85,9 @@ export default function VideoSection() {
                             rel="noopener noreferrer"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition-shadow"
+                            className="inline-flex items-center gap-2 bg-white text-black px-5 py-2.5 md:px-6 md:py-3 rounded-full font-bold text-sm md:text-base shadow-lg hover:shadow-xl transition-shadow"
                         >
-                            <Play size={20} className="fill-current" /> Watch on YouTube
+                            <Play size={16} className="fill-current md:w-5 md:h-5" /> Watch on YouTube
                         </motion.a>
                     </motion.div>
 
@@ -87,10 +97,10 @@ export default function VideoSection() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
-                        className="relative"
+                        className="relative w-full"
                     >
                         {isPlaying ? (
-                            <div className="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                            <div className="aspect-video w-full rounded-xl md:rounded-2xl overflow-hidden shadow-2xl border border-white/10">
                                 <iframe
                                     src={getEmbedUrl(videoData.videoUrl)}
                                     title="Promotional Video"
@@ -100,8 +110,7 @@ export default function VideoSection() {
                                 ></iframe>
                             </div>
                         ) : (
-                            <div className="aspect-video w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative group cursor-pointer" onClick={() => setIsPlaying(true)}>
-                                {/* Placeholder / Thumbnail - Using youtube thumbnail hack */}
+                            <div className="aspect-video w-full rounded-xl md:rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative group cursor-pointer" onClick={() => setIsPlaying(true)}>
                                 <img
                                     src={`https://img.youtube.com/vi/${getYouTubeId(videoData.videoUrl) || ''}/maxresdefault.jpg`}
                                     alt="Video Thumbnail"
@@ -111,15 +120,15 @@ export default function VideoSection() {
                                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                                     <motion.div
                                         whileHover={{ scale: 1.2 }}
-                                        className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg text-white"
+                                        className="w-14 h-14 md:w-20 md:h-20 bg-red-600 rounded-full flex items-center justify-center shadow-lg text-white"
                                     >
-                                        <Play size={40} className="ml-2 fill-current" />
+                                        <Play size={28} className="ml-1 md:ml-2 fill-current md:w-10 md:h-10" />
                                     </motion.div>
                                 </div>
                             </div>
                         )}
                         {/* Decorative blob behind video */}
-                        <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur-2xl opacity-30 -z-10" />
+                        <div className="absolute -inset-3 md:-inset-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur-2xl opacity-20 md:opacity-30 -z-10" />
                     </motion.div>
 
                 </div>
