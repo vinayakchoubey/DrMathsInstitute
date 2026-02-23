@@ -190,12 +190,10 @@ export const resendOtp = async (req: Request, res: Response) => {
 };
 
 export const googleLogin = async (req: Request, res: Response) => {
-    const fs = require('fs');
-    fs.appendFileSync('backend_debug.log', `[${new Date().toISOString()}] Entered googleLogin\n`);
     const { token } = req.body;
+    console.log("[googleLogin] Entered");
 
     try {
-        fs.appendFileSync('backend_debug.log', `Received Token: ${token?.substring(0, 20)}...\n`);
         console.log("Verifying Google Token...");
         console.log("Expected Audience:", process.env.GOOGLE_CLIENT_ID);
         console.log("Received Token (first 20 chars):", token?.substring(0, 20));
@@ -206,7 +204,7 @@ export const googleLogin = async (req: Request, res: Response) => {
         });
         const payload = ticket.getPayload();
         console.log("Verification Payload:", payload);
-        fs.appendFileSync('backend_debug.log', `Payload: ${JSON.stringify(payload)}\n`);
+
 
         if (payload) {
             const { email, name, picture, sub: googleId } = payload;
