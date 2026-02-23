@@ -49,19 +49,19 @@ export default function ContactPage() {
                             <ContactCard
                                 icon={<MapPin className="w-6 h-6" />}
                                 title="Visit Us"
-                                content="K-80A Kalkaji New Delhi , Pincode 110019"
+                                content="H4A 2nd Floor, Kalkaji Main Road, Krishna Market, Block H, New Delhi , Pincode 110019"
                                 color="bg-blue-500/10 text-blue-500"
                             />
                             <ContactCard
                                 icon={<Phone className="w-6 h-6" />}
                                 title="Call Us"
-                                content="+91-6203898793"
+                                content="+91-8178357951"
                                 color="bg-green-500/10 text-green-500"
                             />
                             <ContactCard
                                 icon={<Mail className="w-6 h-6" />}
                                 title="Email Us"
-                                content="vinayakchoubey123@gmail.com"
+                                content="institutedrmaths@gmail.com"
                                 color="bg-purple-500/10 text-purple-500"
                             />
                         </div>

@@ -78,15 +78,15 @@ export default function Footer() {
                         <ul className="space-y-4 text-sm text-gray-400">
                             <li className="flex items-start gap-3">
                                 <MapPin className="text-primary shrink-0" size={18} />
-                                <span>K-80A Kalkaji South Delhi<br />New Delhi, 110019</span>
+                                <span>H4A 2nd Floor, Kalkaji Main Road<br />Krishna Market, Block H, New Delhi, 110019</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Phone className="text-primary shrink-0" size={18} />
-                                <span>+91-6203898793</span>
+                                <span>+91-8178357951</span>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail className="text-primary shrink-0" size={18} />
-                                <span>vinayakchoubey@gmail.com</span>
+                                <span>institutedrmaths@gmail.com</span>
                             </li>
                         </ul>
                     </div>

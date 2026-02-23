@@ -46,7 +46,7 @@ export default function MobileHeroCarousel() {
     if (images.length === 0) return null;
 
     return (
-        <div className="md:hidden w-full relative aspect-[16/9] overflow-hidden bg-gray-900 shadow-2xl mb-6">
+        <div className="md:hidden w-full relative aspect-[16/9] overflow-hidden shadow-2xl mb-6">
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentIndex}

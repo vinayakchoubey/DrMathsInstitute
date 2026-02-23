@@ -50,7 +50,7 @@ export default function Home() {
 
   return (
     // Unified Background Wrapper - Deep Space Theme
-    <div className="flex flex-col min-h-screen bg-[#020617] text-white overflow-hidden">
+    <div className="flex flex-col min-h-screen text-white overflow-hidden">
 
       <MobileHeroCarousel />
 

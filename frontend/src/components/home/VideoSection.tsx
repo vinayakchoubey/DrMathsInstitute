@@ -38,7 +38,7 @@ export default function VideoSection() {
     };
 
     return (
-        <section className="py-12 md:py-20 bg-gradient-to-r from-gray-900 to-black relative overflow-hidden">
+        <section className="py-12 md:py-20 relative overflow-hidden">
             {/* Background Animations */}
             <div className="absolute top-0 left-0 w-full h-full opacity-20 pointer-events-none">
                 <motion.div

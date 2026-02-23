@@ -37,7 +37,7 @@ export default function TestimonialSection() {
     if (testimonials.length === 0) return null;
 
     return (
-        <section className="py-14 md:py-16 bg-slate-950 relative overflow-hidden">
+        <section className="py-14 md:py-16 relative overflow-hidden">
             {/* Background accents */}
             <div className="absolute top-1/3 left-0 w-72 h-72 bg-blue-600/5 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-1/3 right-0 w-72 h-72 bg-purple-600/5 rounded-full blur-[100px] pointer-events-none" />
@@ -68,8 +68,8 @@ export default function TestimonialSection() {
             </div>
 
             {/* Gradient Mask for fading edges */}
-            <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-gradient-to-b from-slate-950 to-transparent z-20 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-full h-24 md:h-32 bg-gradient-to-t from-slate-950 to-transparent z-20 pointer-events-none" />
+            <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-gradient-to-b from-background to-transparent z-20 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-full h-24 md:h-32 bg-gradient-to-t from-background to-transparent z-20 pointer-events-none" />
         </section>
     );
 }

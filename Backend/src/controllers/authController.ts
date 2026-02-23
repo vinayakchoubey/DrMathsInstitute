@@ -66,7 +66,8 @@ export const finalizeSignup = async (req: Request, res: Response) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const role = email === 'vinayakchoubey123@gmail.com' ? 'admin' : 'client';
+        const adminEmails = ['vinayakchoubey123@gmail.com', 'institutedrmaths@gmail.com'];
+        const role = adminEmails.includes(email) ? 'admin' : 'client';
 
         const user = await User.create({
             name,
@@ -235,7 +236,8 @@ export const googleLogin = async (req: Request, res: Response) => {
                 });
             } else {
                 // Create new user
-                const role = email === 'vinayakchoubey123@gmail.com' ? 'admin' : 'client';
+                const adminEmails = ['vinayakchoubey123@gmail.com', 'institutedrmaths@gmail.com'];
+                const role = adminEmails.includes(email!) ? 'admin' : 'client';
 
                 const newUser = await User.create({
                     name,
