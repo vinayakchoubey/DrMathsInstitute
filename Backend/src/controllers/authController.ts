@@ -279,7 +279,93 @@ export const googleLogin = async (req: Request, res: Response) => {
     }
 };
 
+// --- FORGOT PASSWORD FLOW ---
+export const forgotPassword = async (req: Request, res: Response) => {
+    const { email } = req.body;
+    console.log("Forgot Password Request:", email);
+    try {
+        const user = await User.findOne({ email });
+        if (!user) return res.status(404).json({ message: 'No account found with this email' });
 
+        // Google-only users cannot reset password
+        if (!user.password && user.googleId) {
+            return res.status(400).json({ message: 'This account uses Google login. Please sign in with Google.' });
+        }
+
+        // Invalidate any previous OTPs
+        await Otp.deleteMany({ email });
+
+        const otp = generateOTP();
+        console.log("Generated Password Reset OTP:", otp, "for", email);
+
+        await Otp.create({ email, otp });
+
+        const subject = "Password Reset OTP - Dr Maths Institute";
+        const html = `
+            <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 24px; background: #1a1a2e; color: #ffffff; border-radius: 12px;">
+                <h1 style="color: #818cf8; margin-bottom: 16px;">Password Reset</h1>
+                <p>You requested a password reset. Use the OTP below to reset your password:</p>
+                <div style="background: #16213e; padding: 16px; border-radius: 8px; text-align: center; margin: 20px 0;">
+                    <span style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #818cf8;">${otp}</span>
+                </div>
+                <p style="color: #9ca3af; font-size: 14px;">This code is valid for <b>1 minute</b>. If you did not request this, ignore this email.</p>
+            </div>
+        `;
+
+        const emailSent = await sendEmail(email, subject, html);
+        if (!emailSent) {
+            return res.status(500).json({ message: 'Failed to send reset email. Please try again.' });
+        }
+
+        res.status(200).json({ message: 'Password reset OTP sent to your email' });
+    } catch (error: any) {
+        console.error("Forgot Password Error:", error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+    const { email, otp, newPassword } = req.body;
+    console.log("Reset Password Request for:", email);
+    try {
+        if (!newPassword || newPassword.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters' });
+        }
+
+        const validOtp = await Otp.findOne({ email, otp });
+        if (!validOtp) return res.status(400).json({ message: 'Invalid OTP' });
+
+        // Strict 1-minute check
+        const now = new Date().getTime();
+        const otpTime = new Date(validOtp.createdAt).getTime();
+        if (now - otpTime > 60000) {
+            await Otp.deleteOne({ _id: validOtp._id });
+            return res.status(400).json({ message: 'OTP has expired. Please request a new one.' });
+        }
+
+        const user = await User.findOne({ email });
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        // Hash the new password and save
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(newPassword, salt);
+        await user.save();
+
+        // Cleanup OTP
+        await Otp.deleteOne({ _id: validOtp._id });
+
+        // Send confirmation email
+        await sendEmail(email, "Password Changed - Dr Maths Institute",
+            `<h1>Password Updated</h1><p>Your password was successfully changed. If you did not do this, contact support immediately.</p>`
+        );
+
+        console.log("Password reset successful for:", email);
+        res.status(200).json({ message: 'Password reset successful! You can now login with your new password.' });
+    } catch (error: any) {
+        console.error("Reset Password Error:", error);
+        res.status(500).json({ message: error.message });
+    }
+};
 
 export const getProfile = async (req: Request, res: Response) => {
     try {
